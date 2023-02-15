@@ -73,3 +73,5 @@ Notes about bugs and unfinished functionality
 [Jamaine Haywood](https://github.com/jhaywood86)
 
 [Nikki Jaramillo](https://github.com/n-jaramillo)
+
+[Jagbir Mangat](https://github.com/jbmangat)
