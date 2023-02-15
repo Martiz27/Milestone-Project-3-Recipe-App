@@ -40,3 +40,5 @@ const router = require('express').Router()
 // router.delete('/:recipeId', async (req, res) => {
 
 // })
+
+module.exports = router
