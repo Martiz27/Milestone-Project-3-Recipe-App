@@ -3,7 +3,7 @@ import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap'
 // TODO: Make nav horizontally aligned and positioned on the bottom
 function StickyFooter() {
     return (
-        <Navbar fixed='bottom' expand='md' fill className='justify-content-center'>
+        <Navbar bg='light' fixed='bottom' expand='md' fill className='justify-content-center'>
             <Container>
                 <Navbar.Brand href=''>FEAST MODE</Navbar.Brand>
                 <Nav variant='pills'>
@@ -34,11 +34,13 @@ function StickyFooter() {
                             Add New Recipe
                         </Nav.Link>
                     </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link href=''>
-                            User
-                        </Nav.Link>
-                    </Nav.Item>
+
+                    {/* TODO: User Context */}
+                    <NavDropdown align='end' drop='up' title='User' id='user-dropdown'>
+                        <NavDropdown.Item>
+                            Logout
+                        </NavDropdown.Item>
+                    </NavDropdown>
                 </Nav>
             </Container>
         </Navbar>

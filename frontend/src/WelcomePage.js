@@ -1,4 +1,5 @@
-// welcome page before logging in or signing up
+import { Container, Row, Col, Card, Button, ButtonGroup, ButtonToolbar, ToggleButton } from 'react-bootstrap'
+
 function WelcomePage() {
 
 }

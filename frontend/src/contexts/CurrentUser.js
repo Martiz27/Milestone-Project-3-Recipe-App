@@ -1,8 +1,9 @@
-// current user context
+import { createContext, useState } from 'react';
 
-// imports
+export const CurrentUser = createContext()
+
 function CurrentUserProvider() {
-
+    
 }
 
 export default CurrentUserProvider;
