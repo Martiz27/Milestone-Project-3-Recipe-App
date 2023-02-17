@@ -1,0 +1,11 @@
+{
+  "name": "milestone-project-3-recipe-app",
+  "version": "1.0.0",
+  "description": "This app allows you to write down and create recipes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
