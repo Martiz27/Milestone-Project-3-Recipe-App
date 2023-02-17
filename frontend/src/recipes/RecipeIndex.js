@@ -18,8 +18,15 @@ function RecipeIndex() {
                 <Col>
                     <Card style={{ width: '300px' }}>
                         {/* TODO: Get Recipe Name */}
-                        <Card.Header><h3>Open Recipe Mockup</h3></Card.Header>
+                        <Card.Header><h3>Closed Recipe Mockup</h3></Card.Header>
                         <Card.Img src='https://images.unsplash.com/photo-1576186726580-a816e8b12896?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80' className='img-fluid rounded-0'></Card.Img>
+                        <Card.Footer className='text-muted'>
+                            <Button variant='light' size='sm'
+                                onClick={() => setOpen(!open)}
+                            >
+                                Recipe Details
+                            </Button>
+                        </Card.Footer>
                         <Collapse in={open}>
                             <Card.Body>
                                 <Card.Text className='text-muted'>
@@ -63,11 +70,6 @@ function RecipeIndex() {
                                 </Card.Text>
                             </Card.Body>
                         </Collapse>
-                        <Card.Footer className='text-muted'>
-                            <Button variant='light' size='sm'
-                                onClick={() => setOpen(!open)}
-                            >See More</Button>
-                        </Card.Footer>
                     </Card>
                 </Col>
                 <Col>
