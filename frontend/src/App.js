@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
-import { Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import WelcomePage from './WelcomePage'
 import StickyFooter from './StickyFooter'
@@ -14,30 +14,30 @@ import EditRecipeForm from './recipes/EditRecipeForm'
 import SignUpForm from './users/SignUpForm'
 import LoginForm from './users/LoginForm'
 import CurrentUserProvider from './contexts/CurrentUser'
-import { BrowserRouter } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <StickyFooter />
-      <RecipeIndex />
-    </div>
+    // TODO: Testing Components
+    // <div className="App">
+    //   <StickyFooter />
+    //   <RecipeIndex />
+    // </div>
 
-    // TODO: Finish Building Out SRC Components
+    // TODO: Finish Building Out SRC Components and Routes
     // <CurrentUserProvider>
-    //   <BrowserRouter>
-    //     <StickyFooter />
-    //     <Routes>
-    //       <Route exact path='/' component={WelcomePage} />
-    //       <Route exact path='/signup' component={SignUpForm} />
-    //       <Route exact path='/login' component={LoginForm} />
-    //       <Route exact path='/recipes' component={RecipeIndex} />
-    //       <Route exact path='/recipes/:id' component={CurrentRecipe} />
-    //       <Route exact path='/recipes/new' component={NewRecipeForm} />
-    //       <Route exact path='/recipes/:id/edit' component={EditRecipeForm} />
-    //       <Route exact path='/' component={Error404} />
-    //     </Routes>
-    //   </BrowserRouter>
+    <BrowserRouter>
+      <StickyFooter />
+      <Routes>
+        {/* <Route exact path='/' element={<WelcomePage />} />
+          <Route exact path='/signup' element={<SignUpForm />} />
+          <Route exact path='/login' element={<LoginForm />} /> */}
+        <Route exact path='/recipes' element={<RecipeIndex />} />
+        {/* <Route exact path='/recipes/:id' element={<CurrentRecipe />} />
+          <Route exact path='/recipes/new' element={<NewRecipeForm />} />
+          <Route exact path='/recipes/:id/edit' element={<EditRecipeForm />} />
+          <Route exact path='/' element={<Error404} /> */}
+      </Routes>
+    </BrowserRouter>
     // </CurrentUserProvider>
   );
 }
