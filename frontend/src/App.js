@@ -23,6 +23,7 @@ function App() {
       <RecipeIndex />
     </div>
 
+    // TODO: Finish Building Out SRC Components
     // <CurrentUserProvider>
     //   <BrowserRouter>
     //     <StickyFooter />
