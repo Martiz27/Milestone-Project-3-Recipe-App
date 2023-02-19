@@ -1,5 +1,5 @@
 // currentuser context after login or sign up
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Container, Row, Col, Card, Button, ButtonGroup, ButtonToolbar, ToggleButton } from 'react-bootstrap'
 
 // TODO: Add Recipe Data Param
@@ -10,8 +10,17 @@ import { Container, Row, Col, Card, Button, ButtonGroup, ButtonToolbar, ToggleBu
 // Ingredients split into unordered list
 // Directions split into ordered list
 // Card.Footer: Categories
-function RecipeIndex(recipe) {
-    const [open, setOpen] = useState(false);
+function RecipeIndex(data) {
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch(`${process.env.PORT}/recipes`)
+            const resData = await response.json()
+            console.log(resData)
+        }
+        fetchData()
+    }, [])
+
     return (
         <Container className='my-5 mx-5'>
             <Row xs={1} md={2} lg={4} className="g-3">
