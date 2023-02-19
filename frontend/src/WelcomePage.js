@@ -1,1 +1,9 @@
-// welcome page before logging in or signing up
+import { Container, Button } from 'react-bootstrap'
+
+function WelcomePage() {
+    <Container>
+        
+    </Container>
+}
+
+export default WelcomePage;
