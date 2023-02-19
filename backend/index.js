@@ -1,19 +1,23 @@
-const express = require("express")
-const mongoose = require('mongoose')
-
+// Modules and Globals
 require('dotenv').config()
+const express = require("express")
+const bodyParser = require('body-parser')
+const cors = require('cors')
+const path = require('path')
+const app = express()
 const PORT = process.env.PORT
 
-const app = express()
+// Express Settings
+app.use(cors())
+app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true }, () => {
-    console.log('connected to mongo')
-}) 
+// Controllers and Routes
+app.use('/recipes', require('./controllers/recipes.js'))
+app.use('/users', require('./controllers/users.js'))
 
-app.get('/', (req,res) => {
-    res.send('oops')
-})
-
+// Listen for Connections
 app.listen(PORT, () => {
-    console.log(`Server listening on ${PORT}`)
+    console.log(`listening on ${PORT}`)
 })

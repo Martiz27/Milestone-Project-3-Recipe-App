@@ -1,7 +1,9 @@
-import { Container, Row, Col, Card, Button, ButtonGroup, ButtonToolbar, ToggleButton } from 'react-bootstrap'
+import { Container, Button } from 'react-bootstrap'
 
 function WelcomePage() {
-
+    <Container>
+        
+    </Container>
 }
 
 export default WelcomePage;

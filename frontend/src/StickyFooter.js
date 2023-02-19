@@ -3,7 +3,7 @@ import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap'
 // TODO: Make nav horizontally aligned and positioned on the bottom
 function StickyFooter() {
     return (
-        <Navbar bg='light' fixed='bottom' expand='md' fill className='justify-content-center'>
+        <Navbar bg='light' fixed='bottom' expand='md' fill='true' className='justify-content-center'>
             <Container>
                 <Navbar.Brand href=''>FEAST MODE</Navbar.Brand>
                 <Nav variant='pills'>

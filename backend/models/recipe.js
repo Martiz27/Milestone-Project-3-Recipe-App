@@ -27,13 +27,11 @@ const recipeSchema = Schema({
         default: false
     },
     ingredients: { 
-        type: array, 
-        items: { type: String },
+        type: String,
         require: true
     },
     directions: { 
-        type: array, 
-        items: { type: String },
+        type: String,
         require: true
     },
     image: { 
