@@ -1,14 +1,8 @@
 // currentuser context after login or sign up
 import { useState, useEffect } from 'react'
 import { Container, Row, Col, Card, Button, ButtonGroup, ButtonToolbar, ToggleButton } from 'react-bootstrap'
-// TODO: Add Recipe Data Param
-// Set up map to add recipes to Col tags within the Row tag
-// Card.Header: Recipe Title
-// Card.Img: Recipe Image
 // Button Group with Edit Anchor, Delete Anchor, Favorites Radio
-// Ingredients split into unordered list
-// Directions split into ordered list
-// Card.Footer: Categories
+
 function RecipeIndex(data) {
     console.log(data)
     const [recipes, setRecipes] = useState([])
@@ -16,7 +10,7 @@ function RecipeIndex(data) {
     // ${process.env.REACT_APP_SERVER_URL}
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`http://localhost:3000/recipes`)
+            const response = await fetch(`http://localhost:5000/recipes`)
             console.log(response)
             const resData = await response.json()
             console.log(resData)
@@ -33,21 +27,29 @@ function RecipeIndex(data) {
                     <Card.Header><h3>{recipe.title}</h3></Card.Header>
                     <Card.Img src={recipe.image} className='img-fluid rounded-0'></Card.Img>
                     <Card.Body>
-                        {/* TODO: Fill row with col categories, if statements -> concat  #<category> */}
-
-                        <Card.Footer className='text-muted'>
-                            Categories:
-                            {/* TODO: Fill span with categories, if statements -> concat  #<category> */}
-                            <span>
-                                #breakfast
-                            </span>
-                        </Card.Footer>
                         <Row className='text-muted'>
-                            <Col>#breakfast</Col>
-                            <Col>#lunch</Col>
-                            <Col>#dinner</Col>
-                            <Col>#dessert</Col>
+                            {
+                                recipe.breakfast
+                                    ? <Col key='breakfast'> #breakfast </Col>
+                                    : ' '
+                            }
+                            {
+                                recipe.lunch
+                                    ? <Col key='lunch'> #lunch </Col>
+                                    : ' '
+                            }
+                            {
+                                recipe.dinner
+                                    ? <Col key='dinner'> #dinner </Col>
+                                    : ' '
+                            }
+                            {
+                                recipe.dessert
+                                    ? <Col key='dessert'> #dessert </Col>
+                                    : ' '
+                            }
                         </Row>
+                        <br />
                         <ButtonToolbar className='mb-3'>
                             <ButtonGroup className='me-5'>
                                 <Button variant='light' size='sm'>Edit</Button>
@@ -59,20 +61,16 @@ function RecipeIndex(data) {
                             </ButtonGroup>
                         </ButtonToolbar>
                         <h5>Ingredients</h5>
-                        {/* TODO: Unordered array list split with . or new line */}
-                        <br />
                         <ul>
-                            <li>
-                                {recipe.ingredients}
-                            </li>
+                            {recipe.ingredients.split('.').map((ingredient, index) => {
+                                return <li key={index}>{ingredient}</li>
+                            })}
                         </ul>
                         <h5>Directions</h5>
-                        {/* TODO: Ordered array list split with . or new line */}
-                        <br />
                         <ol>
-                            <li>
-                                {recipe.directions}
-                            </li>
+                            {recipe.directions.split('.').map((direction, index) => {
+                                return <li key={index}>{direction}</li>
+                            })}
                         </ol>
                     </Card.Body>
                 </Card>
