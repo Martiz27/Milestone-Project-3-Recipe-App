@@ -4,24 +4,21 @@ import { Container, Row, Col, Card, Button, ButtonGroup, ButtonToolbar, ToggleBu
 // Button Group with Edit Anchor, Delete Anchor, Favorites Radio
 
 function RecipeIndex(data) {
-    console.log(data)
     const [recipes, setRecipes] = useState([])
 
     // ${process.env.REACT_APP_SERVER_URL}
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch(`http://localhost:5000/recipes`)
-            console.log(response)
             const resData = await response.json()
-            console.log(resData)
             setRecipes(resData)
         }
         fetchData()
     }, [])
 
-    let recipesFormatted = recipes.map((recipe) => {
+    let recipesFormatted = recipes.map((recipe, index) => {
         return (
-            <Col>
+            <Col key={index}>
                 <Card style={{ width: '300px' }}>
                     {/* TODO: Get Recipe Name */}
                     <Card.Header><h3>{recipe.title}</h3></Card.Header>
@@ -56,7 +53,10 @@ function RecipeIndex(data) {
                                 <Button variant='warning' size='sm'>Delete</Button>
                             </ButtonGroup>
                             <ButtonGroup>
-                                {/* TODO: Radio Button, Active State: Remove from Favorites, Inactive / Default State: Add to Favorites. Update Favorites value in Recipes */}
+                                {/* TODO: Radio Button, Active State: Remove from Favorites,
+                                    Inactive / Default State: Add to Favorites. 
+                                    Update Favorites value in Recipes 
+                                */}
                                 <ToggleButton variant='danger' size='sm'>Add to Favorites</ToggleButton>
                             </ButtonGroup>
                         </ButtonToolbar>
