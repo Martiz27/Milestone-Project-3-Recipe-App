@@ -21,58 +21,34 @@ function RecipeIndex(data) {
             <Col key={index} className='p-1'>
                 <Card style={{ width: '300px' }}>
                     {/* TODO: Get Recipe Name */}
-                    <Card.Header><h3>{recipe.title}</h3></Card.Header>
                     <Card.Img src={recipe.image} className='img-fluid rounded-0'></Card.Img>
-                    <Card.Body>
-                        <Row className='text-muted'>
-                            {
-                                recipe.breakfast
-                                    ? <Col key='breakfast'> #breakfast </Col>
-                                    : ' '
-                            }
-                            {
-                                recipe.lunch
-                                    ? <Col key='lunch'> #lunch </Col>
-                                    : ' '
-                            }
-                            {
-                                recipe.dinner
-                                    ? <Col key='dinner'> #dinner </Col>
-                                    : ' '
-                            }
-                            {
-                                recipe.dessert
-                                    ? <Col key='dessert'> #dessert </Col>
-                                    : ' '
-                            }
-                        </Row>
-                        <br />
-                        <ButtonToolbar className='mb-3'>
-                            <ButtonGroup className='me-5'>
-                                <Button variant='light' size='sm'>Edit</Button>
-                                <Button variant='warning' size='sm'>Delete</Button>
-                            </ButtonGroup>
-                            <ButtonGroup>
-                                {/* TODO: Radio Button, Active State: Remove from Favorites,
-                                    Inactive / Default State: Add to Favorites. 
-                                    Update Favorites value in Recipes 
-                                */}
-                                <ToggleButton variant='danger' size='sm'>Add to Favorites</ToggleButton>
-                            </ButtonGroup>
-                        </ButtonToolbar>
-                        <h5>Ingredients</h5>
-                        <ul>
-                            {recipe.ingredients.split('.').map((ingredient, index) => {
-                                return <li key={index}>{ingredient}</li>
-                            })}
-                        </ul>
-                        <h5>Directions</h5>
-                        <ol>
-                            {recipe.directions.split('.').map((direction, index) => {
-                                return <li key={index}>{direction}</li>
-                            })}
-                        </ol>
-                    </Card.Body>
+                    <Card.ImgOverlay>
+                        <Card.Title><h3>{recipe.title}</h3></Card.Title>
+                        <Card.Body>
+                            <Row className='text-muted'>
+                                {
+                                    recipe.breakfast
+                                        ? <Col key='breakfast'> #breakfast </Col>
+                                        : ' '
+                                }
+                                {
+                                    recipe.lunch
+                                        ? <Col key='lunch'> #lunch </Col>
+                                        : ' '
+                                }
+                                {
+                                    recipe.dinner
+                                        ? <Col key='dinner'> #dinner </Col>
+                                        : ' '
+                                }
+                                {
+                                    recipe.dessert
+                                        ? <Col key='dessert'> #dessert </Col>
+                                        : ' '
+                                }
+                            </Row>
+                        </Card.Body>
+                    </Card.ImgOverlay>
                 </Card>
             </Col>
         )
