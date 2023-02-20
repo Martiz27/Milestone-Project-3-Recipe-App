@@ -1,7 +1,6 @@
 // currentuser context after login or sign up
 import { useState, useEffect } from 'react'
 import { Container, Row, Col, Card, Button, ButtonGroup, ButtonToolbar, ToggleButton } from 'react-bootstrap'
-// Button Group with Edit Anchor, Delete Anchor, Favorites Radio
 
 function RecipeIndex(data) {
     const [recipes, setRecipes] = useState([])
@@ -20,7 +19,6 @@ function RecipeIndex(data) {
         return (
             <Col key={index} className='p-1'>
                 <Card style={{ width: '300px' }}>
-                    {/* TODO: Get Recipe Name */}
                     <Card.Img src={recipe.image} className='img-fluid rounded-0'></Card.Img>
                     <Card.ImgOverlay>
                         <Card.Title><h3>{recipe.title}</h3></Card.Title>
