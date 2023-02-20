@@ -15,9 +15,9 @@ Recipe.create ([
 ])
 .then(() => {
     console.log('success!')
-    //process.exit()
+    process.exit()
 })
 .catch(err => {
     console.log('Failure', err)
-    // process.exit()
+    process.exit()
 })
