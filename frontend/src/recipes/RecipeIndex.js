@@ -10,16 +10,16 @@ import { Container, Row, Col, Card, Button, ButtonGroup, ButtonToolbar, ToggleBu
 // Directions split into ordered list
 // Card.Footer: Categories
 function RecipeIndex(data) {
-    console.log(data)
+    // console.log(data)
     const [recipes, setRecipes] = useState([])
 
     // ${process.env.REACT_APP_SERVER_URL}
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`http://localhost:3000/recipes`)
-            console.log(response)
+            const response = await fetch(`http://localhost:5000/recipes`)
+            // console.log(response)
             const resData = await response.json()
-            console.log(resData)
+            // console.log(resData)
             setRecipes(resData)
         }
         fetchData()

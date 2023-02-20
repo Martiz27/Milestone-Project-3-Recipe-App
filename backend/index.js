@@ -17,6 +17,10 @@ app.use(bodyParser.json())
 app.use('/recipes', require('./controllers/recipes.js'))
 app.use('/users', require('./controllers/users.js'))
 
+// app.get('/', (req, res) => {
+//     res.send('oops')
+// })
+
 // Listen for Connections
 app.listen(PORT, () => {
     console.log(`listening on ${PORT}`)
