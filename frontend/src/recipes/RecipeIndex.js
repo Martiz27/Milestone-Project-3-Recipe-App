@@ -18,7 +18,7 @@ function RecipeIndex(data) {
 
     let recipesFormatted = recipes.map((recipe, index) => {
         return (
-            <Col key={index}>
+            <Col key={index} className='p-1'>
                 <Card style={{ width: '300px' }}>
                     {/* TODO: Get Recipe Name */}
                     <Card.Header><h3>{recipe.title}</h3></Card.Header>
@@ -80,7 +80,7 @@ function RecipeIndex(data) {
 
     return (
         <Container className='my-5 mx-5'>
-            <Row xs={1} md={2} lg={4} className="g-3">
+            <Row xs={1} md={2} lg={3} xxl={4} className="g-3">
                 {recipesFormatted}
             </Row>
         </Container>
