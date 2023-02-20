@@ -32,10 +32,10 @@ function App() {
           <Route exact path='/signup' element={<SignUpForm />} />
           <Route exact path='/login' element={<LoginForm />} /> */}
         <Route exact path='/recipes' element={<RecipeIndex />} />
-        {/* <Route exact path='/recipes/:id' element={<CurrentRecipe />} />
-          <Route exact path='/recipes/new' element={<NewRecipeForm />} />
-          <Route exact path='/recipes/:id/edit' element={<EditRecipeForm />} />
-          <Route exact path='/' element={<Error404} /> */}
+        <Route exact path='/recipes/:recipeId' element={<CurrentRecipe />} />
+        {/* <Route exact path='/recipes/new' element={<NewRecipeForm />} />
+          <Route exact path='/recipes/:id/edit' element={<EditRecipeForm />} /> */}
+        <Route exact path='/' element={<Error404 />} />
       </Routes>
     </BrowserRouter>
     // </CurrentUserProvider>
