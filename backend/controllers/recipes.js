@@ -22,7 +22,16 @@ router.post('/', async (req, res) => {
 
 // TODO: EDIT FORM
 router.get('/:recipeId/edit', async (req, res) => {
-    res.json({ Response: 'Edit recipe form' })
+    let recipeId = req.params.recipeId
+    // if (!mongoose.Types.ObjectId.isValid(req.param.recipeId)) {
+    //     return res.status(404).json({message: 'Recipe id is not valid'})
+    // }
+    const recipe = await Recipe.findById(req.params.recipeId)
+    if (!recipe) {
+        return res.status(404).json({message: 'Recipe does not exist.'})
+    }
+    console.log(recipe)
+    res.status(200).json(recipe)
 })
 
 // TODO: PUT EDIT
