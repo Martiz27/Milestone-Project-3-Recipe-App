@@ -3,10 +3,13 @@ import { Container, Form, FloatingLabel, Row, Col, Button } from 'react-bootstra
 
 function NewRecipeForm() {
     return (
-        <Container className='my-5 mx-5'>
+        <Container className='my-4 mx-auto'>
             <h1>Add New Recipe</h1>
             <hr />
             <Form>
+                <Form.Label>
+                    Recipe Information
+                </Form.Label>
                 <Row className='mb-3'>
                     <Form.Group>
                         <FloatingLabel
@@ -111,7 +114,7 @@ function NewRecipeForm() {
                 </Form.Group>
 
                 <Form.Group as={Row}>
-                    <Col>
+                    <Col className='text-center'>
                         <Button type="submit">&#43; Add Recipe</Button>
                     </Col>
                 </Form.Group>
