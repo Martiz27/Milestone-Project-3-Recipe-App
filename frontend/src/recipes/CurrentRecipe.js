@@ -28,8 +28,8 @@ function CurrentRecipe() {
     }
 
     async function deleteRecipe() {
-        await fetch(`http://localhost:5000/recipes/${recipeId}`, {method: 'DELETE'})
-        navigate('/recipes/')
+        await fetch(`http://localhost:5000/recipes/${recipe._id}`, {method: 'DELETE'})
+        navigate('/recipes')
     }
 
     return (
