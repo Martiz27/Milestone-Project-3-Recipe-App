@@ -10,14 +10,16 @@ router.get('/', async (req, res) => {
     res.json(recipes)
 })
 
-// TODO: NEW FORM
-router.get('/new', async (req, res) => {
-    res.json({ Response: 'New recipe' })
-})
-
 // TODO: POST NEW
 router.post('/', async (req, res) => {
-    res.json({ Response: 'Successfully created recipe' })
+    if (!req.body.image) {
+        req.body.image = undefined
+    }
+    if (!req.body.source) {
+        req.body.source = undefined
+    }
+    const recipe = await Recipe.create(req.body)
+    res.json(recipe)
 })
 
 // // TODO: SHOW BY CATEGORY
@@ -63,8 +65,8 @@ router.get('/:recipeId', async (req, res) => {
 
 // TODO: DELETE
 router.delete('/:recipeId', async (req, res) => {
-    Recipe.findOneAndDelete(req.params.recipeId)
-        .then((deletedRecipe) => {
+    Recipe.findByIdAndDelete(req.params.recipeId)
+        .then(() => {
             res.status(303).redirect('/recipes')
         })
 })
