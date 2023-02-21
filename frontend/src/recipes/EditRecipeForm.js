@@ -4,7 +4,11 @@ import { Container, Form, FloatingLabel, Row, Col, Button } from 'react-bootstra
 import { BsCheck } from 'react-icons/bs'
 
 function EditRecipeForm() {
+
+    const navigate = useNavigate()
+
     const { recipeId } = useParams()
+
     const [recipe, setRecipe] = useState(null)
 
     useEffect(() => {
@@ -16,7 +20,19 @@ function EditRecipeForm() {
             }
         }
         fetchData()
-    }, [])
+    }, [recipeId])
+
+    async function handleSubmit(e) {
+        e.preventDefault()
+        await fetch(`http://localhost:5000/recipes/${recipe._id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(recipe)
+        })
+        navigate(`/recipes/${recipe._id}`)
+    }
 
     // TODO: Update Loading, Add Loading Component?
     if (recipe === null) {
@@ -30,7 +46,7 @@ function EditRecipeForm() {
         <Container className='my-4 mx-auto pb-5'>
             <h1>Update <span className='text-primary'>{recipe.title}</span></h1>
             <hr />
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <Form.Label>
                     Recipe Information
                 </Form.Label>
@@ -38,13 +54,15 @@ function EditRecipeForm() {
                     <Form.Group>
                         <FloatingLabel
                             controlID='floatingInput'
-                            label='Recipe Title'
-                            className=''
-                        >
+                            label='Recipe Title' >
                             <Form.Control
+                                required
                                 type='text'
                                 placeholder='Enter Recipe Title'
-                                defaultValue={recipe.title}
+                                id='title'
+                                name='title'
+                                value={recipe.title}
+                                onChange={e => setRecipe({ ...recipe, title: e.target.value })}
                             />
                         </FloatingLabel>
                     </Form.Group>
@@ -54,13 +72,15 @@ function EditRecipeForm() {
                     <Form.Group>
                         <FloatingLabel
                             controlID='floatingInput'
-                            label='Description'
-                            className=''
-                        >
+                            label='Description' >
                             <Form.Control
+                                required
                                 type='text'
                                 placeholder='Enter Description'
-                                defaultValue={recipe.description}
+                                id='description'
+                                name='description'
+                                value={recipe.description}
+                                onChange={e => setRecipe({ ...recipe, description: e.target.value })}
                             />
                         </FloatingLabel>
                     </Form.Group>
@@ -71,13 +91,14 @@ function EditRecipeForm() {
                         <Form.Group>
                             <FloatingLabel
                                 controlID='floatingInput'
-                                label='Recipe Image'
-                                className=''
-                            >
+                                label='Recipe Image' >
                                 <Form.Control
                                     type='text'
                                     placeholder='Enter Recipe Image'
-                                    defaultValue={recipe.image}
+                                    id='image'
+                                    name='image'
+                                    value={recipe.image}
+                                    onChange={e => setRecipe({ ...recipe, image: e.target.value })}
                                 />
                             </FloatingLabel>
                         </Form.Group>
@@ -87,13 +108,14 @@ function EditRecipeForm() {
                         <Form.Group>
                             <FloatingLabel
                                 controlID='floatingInput'
-                                label='Recipe Source'
-                                className=''
-                            >
+                                label='Recipe Source' >
                                 <Form.Control
                                     type='text'
                                     placeholder='Enter Recipe Source'
-                                    defaultValue={recipe.source}
+                                    id='source'
+                                    name='source'
+                                    value={recipe.source}
+                                    onChange={e => setRecipe({ ...recipe, source: e.target.value })}
                                 />
                             </FloatingLabel>
                         </Form.Group>
@@ -111,28 +133,44 @@ function EditRecipeForm() {
                         <Form.Check
                             type="checkbox"
                             label="Breakfast"
-                            defaultChecked={recipe.breakfast} />
+                            defaultChecked={recipe.breakfast}
+                            id='breakfast'
+                            name='breakfast'
+                            onChange={e => setRecipe({ ...recipe, breakfast: e.target.checked })}
+                        />
                     </Form.Group>
 
                     <Form.Group as={Col} id="LunchCheck">
                         <Form.Check
                             type="checkbox"
                             label="Lunch"
-                            defaultChecked={recipe.lunch} />
+                            defaultChecked={recipe.lunch}
+                            id='lunch'
+                            name='lunch'
+                            onChange={e => setRecipe({ ...recipe, lunch: e.target.checked })}
+                        />
                     </Form.Group>
 
                     <Form.Group as={Col} id="DinnerCheck">
                         <Form.Check
                             type="checkbox"
                             label="Dinner"
-                            defaultChecked={recipe.dinner} />
+                            defaultChecked={recipe.dinner}
+                            id='dinner'
+                            name='dinner'
+                            onChange={e => setRecipe({ ...recipe, dinner: e.target.checked })}
+                        />
                     </Form.Group>
 
                     <Form.Group as={Col} id="DessertCheck">
                         <Form.Check
                             type="checkbox"
                             label="Dessert"
-                            defaultChecked={recipe.dessert} />
+                            defaultChecked={recipe.dessert}
+                            id='dessert'
+                            name='dessert'
+                            onChange={e => setRecipe({ ...recipe, dessert: e.target.checked })}
+                        />
                     </Form.Group>
                 </Row>
 
@@ -148,8 +186,11 @@ function EditRecipeForm() {
                     <Form.Control
                         as='textarea'
                         className='mt-2 lh-lg'
-                        defaultValue={recipe.ingredients}
                         rows={ingredientLen}
+                        id='ingredients'
+                        name='ingredients'
+                        value={recipe.ingredients}
+                        onChange={e => setRecipe({ ...recipe, ingredients: e.target.value })}
                     />
                 </Form.Group>
 
@@ -165,8 +206,11 @@ function EditRecipeForm() {
                     <Form.Control
                         as='textarea'
                         className='mt-2 lh-lg'
-                        defaultValue={recipe.directions}
                         rows={directionLen}
+                        id='directions'
+                        name='directions'
+                        value={recipe.directions}
+                        onChange={e => setRecipe({ ...recipe, directions: e.target.value })}
                     />
                 </Form.Group>
 
