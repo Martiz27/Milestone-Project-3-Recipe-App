@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Container, Form, FloatingLabel, Row, Col, Button } from 'react-bootstrap';
+import { BsPlus } from 'react-icons/bs'
 
 function NewRecipeForm() {
     return (
@@ -115,7 +116,7 @@ function NewRecipeForm() {
 
                 <Form.Group as={Row}>
                     <Col className='text-center'>
-                        <Button type="submit">&#43; Add Recipe</Button>
+                        <Button type="submit"><BsPlus className='mb-1' /> Add Recipe</Button>
                     </Col>
                 </Form.Group>
             </Form>
