@@ -19,33 +19,36 @@ function RecipeIndex(data) {
         return (
             <Col key={index} className='p-1'>
                 <Card style={{ width: '300px' }}>
-                    <Card.Img src={recipe.image} className='img-fluid rounded-0'></Card.Img>
-                    <Card.ImgOverlay>
+                    <Card.Img src={recipe.image} className='img-fluid rounded-0 ' />
+                    <Card.ImgOverlay className='bg-dark bg-opacity-75 text-light '>
                         <Card.Title><h3>{recipe.title}</h3></Card.Title>
                         <Card.Body>
-                            <Row className='text-muted'>
+                            <Row className='fst-italic fw-bold'>
                                 {
                                     recipe.breakfast
-                                        ? <Col key='breakfast'> #breakfast </Col>
+                                        ? <Col key='breakfast'> #breakfast</Col>
                                         : ' '
                                 }
                                 {
                                     recipe.lunch
-                                        ? <Col key='lunch'> #lunch </Col>
+                                        ? <Col key='lunch'> #lunch</Col>
                                         : ' '
                                 }
                                 {
                                     recipe.dinner
-                                        ? <Col key='dinner'> #dinner </Col>
+                                        ? <Col key='dinner'> #dinner</Col>
                                         : ' '
                                 }
                                 {
                                     recipe.dessert
-                                        ? <Col key='dessert'> #dessert </Col>
+                                        ? <Col key='dessert'> #dessert</Col>
                                         : ' '
                                 }
                             </Row>
                         </Card.Body>
+                        <Row className='ms-1 mb-3 position-absolute bottom-0'>
+                                <Button variant='light' size='sm'>Open Recipe &rarr;</Button>
+                        </Row>
                     </Card.ImgOverlay>
                 </Card>
             </Col>
