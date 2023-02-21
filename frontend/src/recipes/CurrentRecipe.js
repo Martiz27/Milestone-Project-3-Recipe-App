@@ -61,7 +61,7 @@ function CurrentRecipe() {
                     </Col>
                     <Col className='col-md-8'>
                         <Card.Body>
-                            <Card.Title><h1>{recipe.title}</h1></Card.Title>
+                            <Card.Title><h1 className='text-primary'>{recipe.title}</h1></Card.Title>
                             <Row className='text-muted fst-italic mb-3'>
                                 {
                                     recipe.breakfast
