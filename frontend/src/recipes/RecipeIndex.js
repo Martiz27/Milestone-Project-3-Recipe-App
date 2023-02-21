@@ -1,6 +1,7 @@
 // currentuser context after login or sign up
 import { useState, useEffect } from 'react'
 import { Container, Row, Col, Card, Button, ButtonGroup, ButtonToolbar, ToggleButton } from 'react-bootstrap'
+import { BsArrowRightShort } from 'react-icons/bs'
 
 function RecipeIndex(data) {
     const [recipes, setRecipes] = useState([])
@@ -47,7 +48,7 @@ function RecipeIndex(data) {
                             </Row>
                         </Card.Body>
                         <Row className='ms-1 mb-3 position-absolute bottom-0'>
-                                <Button variant='light' size='sm'>Open Recipe &rarr;</Button>
+                            <Button variant='light' size='sm'>Open Recipe <BsArrowRightShort /></Button>
                         </Row>
                     </Card.ImgOverlay>
                 </Card>
