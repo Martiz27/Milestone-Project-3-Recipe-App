@@ -1,10 +1,27 @@
 // currentuser context after login or sign up
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
-import { Container, Row, Col, Card, Button, ButtonGroup, ButtonToolbar, ToggleButton } from 'react-bootstrap'
+import { Container, Row, Col, Card, Button} from 'react-bootstrap'
 import { BsArrowRightShort } from 'react-icons/bs'
+import Masonry from 'react-masonry-css'
 
 function RecipeIndex(data) {
+
+    // Bootstrap Breakpoints:
+    // xxl: 1400
+    // xl: 1200
+    // lg: 992
+    // md: 768
+    // sm: 576
+    // xs: <576
+
+    // Masonry Breakpoints
+    const masonryBreakpoint = {
+        default: 4,
+        1400: 3,
+        1000: 2,
+        770: 1,
+    }
 
     const navigate = useNavigate()
 
@@ -22,49 +39,50 @@ function RecipeIndex(data) {
 
     let recipesFormatted = recipes.map((recipe, index) => {
         return (
-            <Col key={index} className='p-1'>
-                <Card style={{ width: '300px' }}>
-                    <Card.Img src={recipe.image} className='img-fluid rounded-0' />
-                    <Card.ImgOverlay className='bg-dark bg-opacity-75 text-light '>
-                        <Card.Title><h3>{recipe.title}</h3></Card.Title>
-                        <Card.Body>
-                            <Row className='fst-italic fw-bold'>
-                                {
-                                    recipe.breakfast
-                                        ? <Col key='breakfast'> #breakfast</Col>
-                                        : ' '
-                                }
-                                {
-                                    recipe.lunch
-                                        ? <Col key='lunch'> #lunch</Col>
-                                        : ' '
-                                }
-                                {
-                                    recipe.dinner
-                                        ? <Col key='dinner'> #dinner</Col>
-                                        : ' '
-                                }
-                                {
-                                    recipe.dessert
-                                        ? <Col key='dessert'> #dessert</Col>
-                                        : ' '
-                                }
-                            </Row>
-                        </Card.Body>
-                        <Row className='ms-1 mb-3 position-absolute bottom-0'>
-                            <Button variant='light' size='sm' onClick={() => navigate(`/recipes/${recipe._id}`)}>Open Recipe <BsArrowRightShort /></Button>
+            < Card style={{ width: '300px' }
+            }>
+                <Card.Img src={recipe.image} className='img-fluid rounded-0' />
+                <Card.ImgOverlay className='bg-dark bg-opacity-75 text-light '>
+                    <Card.Title><h3>{recipe.title}</h3></Card.Title>
+                    <Card.Body>
+                        <Row className='fst-italic fw-bold'>
+                            {
+                                recipe.breakfast
+                                    ? <Col key='breakfast'> #breakfast</Col>
+                                    : ' '
+                            }
+                            {
+                                recipe.lunch
+                                    ? <Col key='lunch'> #lunch</Col>
+                                    : ' '
+                            }
+                            {
+                                recipe.dinner
+                                    ? <Col key='dinner'> #dinner</Col>
+                                    : ' '
+                            }
+                            {
+                                recipe.dessert
+                                    ? <Col key='dessert'> #dessert</Col>
+                                    : ' '
+                            }
                         </Row>
-                    </Card.ImgOverlay>
-                </Card>
-            </Col>
+                    </Card.Body>
+                    <Row className='ms-1 mb-3 position-absolute bottom-0'>
+                        <Button variant='light' size='sm' onClick={() => navigate(`/recipes/${recipe._id}`)}>Open Recipe <BsArrowRightShort /></Button>
+                    </Row>
+                </Card.ImgOverlay>
+            </Card >
         )
     })
 
     return (
-        <Container className='my-5 mx-5'>
-            <Row xs={1} md={2} lg={3} xxl={4} className="g-3">
+        <Container className='my-5 mx-auto'>
+            <Masonry breakpointCols={masonryBreakpoint}
+                className="masonry-grid"
+                columnClassName="masonry-grid_column">
                 {recipesFormatted}
-            </Row>
+            </Masonry>
         </Container>
     )
 }
