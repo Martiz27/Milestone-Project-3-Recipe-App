@@ -39,8 +39,7 @@ function RecipeIndex(data) {
 
     let recipesFormatted = recipes.map((recipe, index) => {
         return (
-            < Card style={{ width: '300px' }
-            }>
+            <Card key={index} style={{ width: '300px' }}>
                 <Card.Img src={recipe.image} className='img-fluid rounded-0' />
                 <Card.ImgOverlay className='bg-dark bg-opacity-75 text-light '>
                     <Card.Title><h3>{recipe.title}</h3></Card.Title>
