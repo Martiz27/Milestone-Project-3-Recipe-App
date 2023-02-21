@@ -52,25 +52,25 @@ function CurrentRecipe() {
                     <Col className='col-md-8'>
                         <Card.Body>
                             <Card.Title><h1>{recipe.title}</h1></Card.Title>
-                            <Row className='text-muted mb-3'>
+                            <Row className='text-muted fst-italic mb-3'>
                                 {
                                     recipe.breakfast
-                                        ? <Col key='breakfast'> #breakfast </Col>
+                                        ? <Col key='breakfast'> #breakfast</Col>
                                         : ' '
                                 }
                                 {
                                     recipe.lunch
-                                        ? <Col key='lunch'> #lunch </Col>
+                                        ? <Col key='lunch'> #lunch</Col>
                                         : ' '
                                 }
                                 {
                                     recipe.dinner
-                                        ? <Col key='dinner'> #dinner </Col>
+                                        ? <Col key='dinner'> #dinner</Col>
                                         : ' '
                                 }
                                 {
                                     recipe.dessert
-                                        ? <Col key='dessert'> #dessert </Col>
+                                        ? <Col key='dessert'> #dessert</Col>
                                         : ' '
                                 }
                             </Row>
