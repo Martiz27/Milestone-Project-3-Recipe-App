@@ -20,6 +20,7 @@ function CurrentRecipe() {
         fetchData()
     }, [])
 
+    // TODO: Update Loading, Add Loading Component?
     if (recipe === null) {
         return <h1>Loading</h1>
     }
