@@ -1,9 +1,13 @@
 // currentuser context after login or sign up
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router'
 import { Container, Row, Col, Card, Button, ButtonGroup, ButtonToolbar, ToggleButton } from 'react-bootstrap'
 import { BsArrowRightShort } from 'react-icons/bs'
 
 function RecipeIndex(data) {
+
+    const navigate = useNavigate()
+
     const [recipes, setRecipes] = useState([])
 
     // ${process.env.REACT_APP_SERVER_URL}
@@ -20,7 +24,7 @@ function RecipeIndex(data) {
         return (
             <Col key={index} className='p-1'>
                 <Card style={{ width: '300px' }}>
-                    <Card.Img src={recipe.image} className='img-fluid rounded-0 ' />
+                    <Card.Img src={recipe.image} className='img-fluid rounded-0' />
                     <Card.ImgOverlay className='bg-dark bg-opacity-75 text-light '>
                         <Card.Title><h3>{recipe.title}</h3></Card.Title>
                         <Card.Body>
@@ -48,7 +52,7 @@ function RecipeIndex(data) {
                             </Row>
                         </Card.Body>
                         <Row className='ms-1 mb-3 position-absolute bottom-0'>
-                            <Button variant='light' size='sm'>Open Recipe <BsArrowRightShort /></Button>
+                            <Button variant='light' size='sm' onClick={() => navigate(`/recipes/${recipe._id}`)}>Open Recipe <BsArrowRightShort /></Button>
                         </Row>
                     </Card.ImgOverlay>
                 </Card>
