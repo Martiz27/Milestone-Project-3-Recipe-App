@@ -38,6 +38,19 @@
   }
 }
 
+/* Custom CSS */
+
 ul li {
   list-style-type: none;
+}
+
+:root {
+  --white-bg: #F1EBE4;
+  --grey-bg: #BCB9B4;
+  --dark-bg: #252321;
+  --primary-red: #900000; 
+  --secondary-red: #6E0D25;
+  --primary-brown: #A7988B;
+  --secondary-brown: #47412D;
+  --green-accent: #749635;
 }
