@@ -25,7 +25,7 @@ function EditRecipeForm() {
 
     return (
         <Container className='my-4 mx-auto pb-5'>
-            <h1>Update {recipe.title}</h1>
+            <h1>Update <span className='text-primary'>{recipe.title}</span></h1>
             <hr />
             <Form>
                 <Form.Label>
