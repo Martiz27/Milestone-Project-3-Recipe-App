@@ -34,7 +34,7 @@ function App() {
         <Route exact path='/recipes' element={<RecipeIndex />} />
         <Route exact path='/recipes/:recipeId' element={<CurrentRecipe />} />
         <Route exact path='/recipes/new' element={<NewRecipeForm />} />
-        {/*  <Route exact path='/recipes/:id/edit' element={<EditRecipeForm />} /> */}
+        <Route exact path='/recipes/:recipeId/edit' element={<EditRecipeForm />} /> 
         <Route path='/' element={<Error404 />} />
       </Routes>
     </BrowserRouter>
