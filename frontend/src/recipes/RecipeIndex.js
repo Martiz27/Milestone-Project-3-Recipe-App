@@ -77,7 +77,7 @@ function RecipeIndex(data) {
     })
 
     return (
-        <Container className='my-5 mx-auto'>
+        <Container className='my-5 mx-auto pb-5'>
             <Masonry breakpointCols={masonryBreakpoint}
                 className="masonry-grid"
                 columnClassName="masonry-grid_column">

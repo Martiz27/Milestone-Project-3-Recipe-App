@@ -4,7 +4,7 @@ import { BsPlus } from 'react-icons/bs'
 
 function NewRecipeForm() {
     return (
-        <Container className='my-4 mx-auto'>
+        <Container className='my-4 mx-auto pb-5'>
             <h1 className='text-primary'>Add New Recipe</h1>
             <hr />
             <Form>
