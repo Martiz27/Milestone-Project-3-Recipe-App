@@ -6,7 +6,7 @@ const { Recipe } = db
 
 // TODO: RECIPE INDEX
 router.get('/', async (req, res) => {
-    const recipes = await Recipe.find().sort({title: 1})
+    const recipes = await Recipe.find().sort({ title: 1 })
     res.json(recipes)
 })
 
@@ -20,6 +20,13 @@ router.post('/', async (req, res) => {
     res.json({ Response: 'Successfully created recipe' })
 })
 
+// // TODO: SHOW BY CATEGORY
+// router.get('/:category', async (req, res) => {
+//     const recipes = await Recipe.find({[req.params.category]: {$eq: true}})
+//     console.log(recipes)
+//     res.json(recipes)
+// })
+
 // TODO: EDIT FORM
 router.get('/:recipeId/edit', async (req, res) => {
     let recipeId = req.params.recipeId
@@ -28,7 +35,7 @@ router.get('/:recipeId/edit', async (req, res) => {
     // }
     const recipe = await Recipe.findById(req.params.recipeId)
     if (!recipe) {
-        return res.status(404).json({message: 'Recipe does not exist.'})
+        return res.status(404).json({ message: 'Recipe does not exist.' })
     }
     console.log(recipe)
     res.status(200).json(recipe)
@@ -48,20 +55,18 @@ router.get('/:recipeId', async (req, res) => {
     // }
     const recipe = await Recipe.findById(req.params.recipeId)
     if (!recipe) {
-        return res.status(404).json({message: 'Recipe does not exist.'})
+        return res.status(404).json({ message: 'Recipe does not exist.' })
     }
     console.log(recipe)
     res.status(200).json(recipe)
 })
 
-// TODO: SHOW BY CATEGORY
-router.get('/:categoryId', async (req, res) => {
-    res.json({ Response: 'Show recipes in this category' })
-})
-
 // TODO: DELETE
 router.delete('/:recipeId', async (req, res) => {
-    res.json({ Response: 'Successfully deleted recipe' })
+    Recipe.findOneAndDelete(req.params.recipeId)
+        .then((deletedRecipe) => {
+            res.status(303).redirect('/recipes')
+        })
 })
 
 module.exports = router;
