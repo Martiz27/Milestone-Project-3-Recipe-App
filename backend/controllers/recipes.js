@@ -45,7 +45,17 @@ router.get('/:recipeId/edit', async (req, res) => {
 
 // TODO: PUT EDIT
 router.put('/:recipeId', async (req, res) => {
-    res.json({ Response: 'Successfully updated recipe' })
+    if (!req.body.image) {
+        req.body.image = 'https://images.unsplash.com/photo-1576186726580-a816e8b12896?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80'
+    }
+    if (!req.body.source) {
+        req.body.source = `Grandma's Cookbook`
+    }
+    Recipe.findByIdAndUpdate(req.params.recipeId, req.body, { new: true })
+        .then(() => {
+            res.redirect(`/${req.params.recipeId}`)
+        })
+
 })
 
 // TODO: SHOW
