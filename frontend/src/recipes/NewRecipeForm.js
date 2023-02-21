@@ -5,7 +5,7 @@ import { BsPlus } from 'react-icons/bs'
 function NewRecipeForm() {
     return (
         <Container className='my-4 mx-auto'>
-            <h1>Add New Recipe</h1>
+            <h1 className='text-primary'>Add New Recipe</h1>
             <hr />
             <Form>
                 <Form.Label>
@@ -41,33 +41,36 @@ function NewRecipeForm() {
                     </Form.Group>
                 </Row>
 
-                <Row className='mb-3'>
-                    <Form.Group as={Col}>
-                        <FloatingLabel
-                            controlID='floatingInput'
-                            label='Recipe Image'
-                            className=''
-                        >
-                            <Form.Control
-                                type='text'
-                                placeholder='Enter Recipe Image'
-                            />
-                        </FloatingLabel>
-                    </Form.Group>
+                <Row className='mb-3 g-3'>
+                    <Col md={12} lg={6}>
+                        <Form.Group>
+                            <FloatingLabel
+                                controlID='floatingInput'
+                                label='Recipe Image'
+                                className=''
+                            >
+                                <Form.Control
+                                    type='text'
+                                    placeholder='Enter Recipe Image'
+                                />
+                            </FloatingLabel>
+                        </Form.Group>
+                    </Col>
 
-
-                    <Form.Group as={Col}>
-                        <FloatingLabel
-                            controlID='floatingInput'
-                            label='Recipe Source'
-                            className=''
-                        >
-                            <Form.Control
-                                type='text'
-                                placeholder='Enter Recipe Source'
-                            />
-                        </FloatingLabel>
-                    </Form.Group>
+                    <Col md={12} lg={6}>
+                        <Form.Group>
+                            <FloatingLabel
+                                controlID='floatingInput'
+                                label='Recipe Source'
+                                className=''
+                            >
+                                <Form.Control
+                                    type='text'
+                                    placeholder='Enter Recipe Source'
+                                />
+                            </FloatingLabel>
+                        </Form.Group>
+                    </Col>
                 </Row>
 
                 <hr />
@@ -77,16 +80,24 @@ function NewRecipeForm() {
                         Categories
                     </Form.Label>
                     <Form.Group as={Col} id="BreakfastCheck">
-                        <Form.Check type="checkbox" label="Breakfast" />
+                        <Form.Check
+                            type="checkbox"
+                            label="Breakfast" />
                     </Form.Group>
                     <Form.Group as={Col} id="LunchCheck">
-                        <Form.Check type="checkbox" label="Lunch" />
+                        <Form.Check
+                            type="checkbox"
+                            label="Lunch" />
                     </Form.Group>
                     <Form.Group as={Col} id="DinnerCheck">
-                        <Form.Check type="checkbox" label="Dinner" />
+                        <Form.Check
+                            type="checkbox"
+                            label="Dinner" />
                     </Form.Group>
                     <Form.Group as={Col} id="DessertCheck">
-                        <Form.Check type="checkbox" label="Dessert" />
+                        <Form.Check
+                            type="checkbox"
+                            label="Dessert" />
                     </Form.Group>
                 </Row>
 
