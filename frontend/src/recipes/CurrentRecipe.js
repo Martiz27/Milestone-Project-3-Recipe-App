@@ -6,6 +6,8 @@ import { BsPencilSquare, BsTrashFill, BsStarFill, BsStar } from 'react-icons/bs'
 
 function CurrentRecipe() {
 
+    const navigate = useNavigate()
+
     const { recipeId } = useParams()
     const [recipe, setRecipe] = useState(null)
 
@@ -35,7 +37,7 @@ function CurrentRecipe() {
                             <Col>
                                 <ButtonToolbar>
                                     <ButtonGroup>
-                                        <Button variant='light' size='md'><BsPencilSquare /> Edit</Button>
+                                        <Button variant='light' size='md' onClick={() => navigate(`/recipes/${recipe._id}/edit`)}><BsPencilSquare /> Edit</Button>
                                         <Button variant='warning' size='md'><BsTrashFill /> Delete</Button>
                                     </ButtonGroup>
                                     {/* 
