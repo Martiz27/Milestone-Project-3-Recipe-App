@@ -23,6 +23,9 @@ function EditRecipeForm() {
         return <h1>Loading</h1>
     }
 
+    let ingredientLen = recipe.ingredients.split(/\r?\n/).length
+    let directionLen = recipe.directions.split(/\r?\n/).length
+
     return (
         <Container className='my-4 mx-auto pb-5'>
             <h1>Update <span className='text-primary'>{recipe.title}</span></h1>
@@ -63,35 +66,38 @@ function EditRecipeForm() {
                     </Form.Group>
                 </Row>
 
-                <Row className='mb-3'>
-                    <Form.Group as={Col}>
-                        <FloatingLabel
-                            controlID='floatingInput'
-                            label='Recipe Image'
-                            className=''
-                        >
-                            <Form.Control
-                                type='text'
-                                placeholder='Enter Recipe Image'
-                                defaultValue={recipe.image}
-                            />
-                        </FloatingLabel>
-                    </Form.Group>
+                <Row className='mb-3 g-3'>
+                    <Col md={12} lg={6}>
+                        <Form.Group>
+                            <FloatingLabel
+                                controlID='floatingInput'
+                                label='Recipe Image'
+                                className=''
+                            >
+                                <Form.Control
+                                    type='text'
+                                    placeholder='Enter Recipe Image'
+                                    defaultValue={recipe.image}
+                                />
+                            </FloatingLabel>
+                        </Form.Group>
+                    </Col>
 
-
-                    <Form.Group as={Col}>
-                        <FloatingLabel
-                            controlID='floatingInput'
-                            label='Recipe Source'
-                            className=''
-                        >
-                            <Form.Control
-                                type='text'
-                                placeholder='Enter Recipe Source'
-                                defaultValue={recipe.source}
-                            />
-                        </FloatingLabel>
-                    </Form.Group>
+                    <Col md={12} lg={6}>
+                        <Form.Group>
+                            <FloatingLabel
+                                controlID='floatingInput'
+                                label='Recipe Source'
+                                className=''
+                            >
+                                <Form.Control
+                                    type='text'
+                                    placeholder='Enter Recipe Source'
+                                    defaultValue={recipe.source}
+                                />
+                            </FloatingLabel>
+                        </Form.Group>
+                    </Col>
                 </Row>
 
                 <hr />
@@ -102,19 +108,31 @@ function EditRecipeForm() {
                     </Form.Label>
 
                     <Form.Group as={Col} id="BreakfastCheck">
-                        <Form.Check type="checkbox" label="Breakfast" defaultChecked={recipe.breakfast} />
+                        <Form.Check
+                            type="checkbox"
+                            label="Breakfast"
+                            defaultChecked={recipe.breakfast} />
                     </Form.Group>
 
                     <Form.Group as={Col} id="LunchCheck">
-                        <Form.Check type="checkbox" label="Lunch" defaultChecked={recipe.lunch} />
+                        <Form.Check
+                            type="checkbox"
+                            label="Lunch"
+                            defaultChecked={recipe.lunch} />
                     </Form.Group>
 
                     <Form.Group as={Col} id="DinnerCheck">
-                        <Form.Check type="checkbox" label="Dinner" defaultChecked={recipe.dinner} />
+                        <Form.Check
+                            type="checkbox"
+                            label="Dinner"
+                            defaultChecked={recipe.dinner} />
                     </Form.Group>
 
                     <Form.Group as={Col} id="DessertCheck">
-                        <Form.Check type="checkbox" label="Dessert" defaultChecked={recipe.dessert} />
+                        <Form.Check
+                            type="checkbox"
+                            label="Dessert"
+                            defaultChecked={recipe.dessert} />
                     </Form.Group>
                 </Row>
 
@@ -127,7 +145,12 @@ function EditRecipeForm() {
                             Separate ingredients by writing them on a new line.
                         </Form.Text>
                     </Row>
-                    <Form.Control as='textarea' className='mt-2 lh-lg' defaultValue={recipe.ingredients} />
+                    <Form.Control
+                        as='textarea'
+                        className='mt-2 lh-lg'
+                        defaultValue={recipe.ingredients}
+                        rows={ingredientLen}
+                    />
                 </Form.Group>
 
                 <hr />
@@ -139,12 +162,19 @@ function EditRecipeForm() {
                             Separate directions by writing them on a new line.
                         </Form.Text>
                     </Row>
-                    <Form.Control as='textarea' className='mt-2 lh-lg' defaultValue={recipe.directions} />
+                    <Form.Control
+                        as='textarea'
+                        className='mt-2 lh-lg'
+                        defaultValue={recipe.directions}
+                        rows={directionLen}
+                    />
                 </Form.Group>
 
                 <Form.Group as={Row}>
                     <Col className='text-center'>
-                        <Button type="submit"><BsCheck className='mb-1' /> Update Recipe</Button>
+                        <Button type="submit">
+                            <BsCheck className='mb-1' /> Update Recipe
+                        </Button>
                     </Col>
                 </Form.Group>
             </Form>
