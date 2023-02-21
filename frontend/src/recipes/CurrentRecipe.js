@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Container, Row, Col, Card, Button, ButtonGroup, ButtonToolbar, ToggleButton } from 'react-bootstrap'
+import { BsPencilSquare, BsTrashFill, BsStarFill, BsStar } from 'react-icons/bs'
 
 function CurrentRecipe() {
 
@@ -33,8 +34,8 @@ function CurrentRecipe() {
                             <Col>
                                 <ButtonToolbar>
                                     <ButtonGroup>
-                                        <Button variant='light' size='sm'>Edit</Button>
-                                        <Button variant='warning' size='sm'>Delete</Button>
+                                        <Button variant='light' size='md'><BsPencilSquare /> Edit</Button>
+                                        <Button variant='warning' size='md'><BsTrashFill /> Delete</Button>
                                     </ButtonGroup>
                                     {/* 
                                     TODO: Radio Button, Active State: Remove from Favorites,
@@ -44,7 +45,13 @@ function CurrentRecipe() {
                                 </ButtonToolbar>
                             </Col>
                             <Col>
-                                <ToggleButton variant='danger' size='sm'>Remove From / Add to Favorites</ToggleButton>
+                                <ToggleButton variant='danger' size='md' className='' >
+                                    {
+                                        recipe.favorite
+                                            ? <Col><BsStarFill /> Remove From Favorites</Col>
+                                            : <Col><BsStar /> Add to Favorites</Col>
+                                    }
+                                </ToggleButton>
                             </Col>
                         </Row>
                         <Card.Text className='fst-italic fw-bold p-4'>{recipe.description}</Card.Text>
