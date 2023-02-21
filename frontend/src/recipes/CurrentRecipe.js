@@ -20,11 +20,16 @@ function CurrentRecipe() {
             }
         }
         fetchData()
-    }, [])
+    }, [recipeId])
 
     // TODO: Update Loading, Add Loading Component?
     if (recipe === null) {
         return <h1>Loading</h1>
+    }
+
+    async function deleteRecipe() {
+        await fetch(`http://localhost:5000/recipes/${recipeId}`, {method: 'DELETE'})
+        navigate('/recipes/')
     }
 
     return (
@@ -48,7 +53,7 @@ function CurrentRecipe() {
                                             <Button variant='light' size='md' onClick={() => navigate(`/recipes/${recipe._id}/edit`)}>
                                                 <BsPencilSquare /> Edit
                                             </Button>
-                                            <Button variant='warning' size='md'>
+                                            <Button variant='warning' size='md' type='submit' onClick={deleteRecipe}>
                                                 <BsTrashFill /> Delete
                                             </Button>
                                         </ButtonGroup>
