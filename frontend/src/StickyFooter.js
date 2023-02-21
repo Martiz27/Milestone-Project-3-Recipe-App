@@ -35,7 +35,7 @@ function StickyFooter() {
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link href=''>
+                            <Nav.Link onClick={() => navigate('/recipes/new')}>
                                 Add New Recipe
                             </Nav.Link>
                         </Nav.Item>
