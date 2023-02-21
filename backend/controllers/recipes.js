@@ -6,7 +6,7 @@ const { Recipe } = db
 
 // TODO: RECIPE INDEX
 router.get('/', async (req, res) => {
-    const recipes = await Recipe.find()
+    const recipes = await Recipe.find().sort({title: 1})
     res.json(recipes)
 })
 
