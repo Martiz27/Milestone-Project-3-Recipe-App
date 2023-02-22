@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router'
 import { Container, Card, Button, ButtonToolbar } from 'react-bootstrap'
-import brand from './brand.jpg'
+import brand from './images/brand.jpg'
 import { BsEggFried, BsEgg } from 'react-icons/bs';
 
 function WelcomePage() {
@@ -16,10 +16,10 @@ function WelcomePage() {
                         <h3>A Recipe Library App</h3>
                     </Card.Title>
                     <ButtonToolbar className='d-flex justify-content-end gap-3'>
-                        <Button variant='light' size='sm'  onClick={() => navigate('/login')}>
+                        <Button variant='light' size='sm'  onClick={() => navigate('/users/login')}>
                             <BsEggFried className='mb-1'/> Login
                         </Button>
-                        <Button variant='warning' size='sm' onClick={() => navigate('/signup')}>
+                        <Button variant='warning' size='sm' onClick={() => navigate('/users/signup')}>
                             <BsEgg className='mb-1'/> Sign Up
                         </Button>
                     </ButtonToolbar>
