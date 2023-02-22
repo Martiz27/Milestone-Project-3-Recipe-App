@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router'
 import { Container, Card, Row, Button } from 'react-bootstrap'
-import WelcomePage from "./WelcomePage";
 import errorImg from './error404.jpg'
 import { BsArrowLeftShort } from 'react-icons/bs';
 
@@ -10,7 +9,7 @@ function Error404() {
     return (
         <Container className='my-5 mx-auto pb-5'>
             <Card className='w-75 mx-auto'>
-                <Card.Img src={errorImg} className='img-fluid rounded-0' />
+                <Card.Img src={errorImg} className='img-fluid rounded-2' />
                 <Card.ImgOverlay className='bg-dark bg-opacity-75 text-light text-center'>
                     <Card.Title><h1 className='text-warning'>404</h1></Card.Title>
                     <Card.Body>
