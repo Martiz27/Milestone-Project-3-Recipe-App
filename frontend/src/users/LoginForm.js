@@ -43,7 +43,7 @@ function LoginForm() {
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
-                                controlID='floatingInput'
+                                id='floatingInput'
                                 label='Email'>
                                 <Form.Control
                                     required
@@ -60,7 +60,7 @@ function LoginForm() {
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
-                                controlID='floatingInput'
+                                id='floatingInput'
                                 label='Password'>
                                 <Form.Control
                                     required

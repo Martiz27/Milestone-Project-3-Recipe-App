@@ -47,7 +47,7 @@ function SignUpForm() {
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
-                                controlID='floatingInput'
+                                id='floatingFirstName'
                                 label='First Name' >
                                 <Form.Control
                                     required
@@ -64,7 +64,7 @@ function SignUpForm() {
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
-                                controlID='floatingInput'
+                                id='floatingLastName'
                                 label='Last Name' >
                                 <Form.Control
                                     required
@@ -80,7 +80,7 @@ function SignUpForm() {
                     </Col>
                     <Form.Group>
                         <FloatingLabel
-                            controlID='floatingInput'
+                            id='floatingEmail'
                             label='Email' >
                             <Form.Control
                                 required
@@ -108,7 +108,7 @@ function SignUpForm() {
                 <Row className='mb-3 g-3'>
                     <Form.Group>
                         <FloatingLabel
-                            controlID='floatingInput'
+                            id='floatingUsername'
                             label='Username'>
                             <Form.Control
                                 required
@@ -124,7 +124,7 @@ function SignUpForm() {
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
-                                controlID='floatingInput'
+                                id='floatingPassword'
                                 label='Password'>
                                 <Form.Control
                                     required

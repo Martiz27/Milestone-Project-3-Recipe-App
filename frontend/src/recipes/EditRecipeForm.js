@@ -53,7 +53,7 @@ function EditRecipeForm() {
                 <Row className='mb-3'>
                     <Form.Group>
                         <FloatingLabel
-                            controlID='floatingInput'
+                            id='floatingInput'
                             label='Recipe Title' >
                             <Form.Control
                                 required
@@ -71,7 +71,7 @@ function EditRecipeForm() {
                 <Row className='mb-3'>
                     <Form.Group>
                         <FloatingLabel
-                            controlID='floatingInput'
+                            id='floatingInput'
                             label='Description' >
                             <Form.Control
                                 required
@@ -90,7 +90,7 @@ function EditRecipeForm() {
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
-                                controlID='floatingInput'
+                                id='floatingInput'
                                 label='Recipe Image' >
                                 <Form.Control
                                     type='text'
@@ -107,7 +107,7 @@ function EditRecipeForm() {
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
-                                controlID='floatingInput'
+                                id='floatingInput'
                                 label='Recipe Source' >
                                 <Form.Control
                                     type='text'
