@@ -1,30 +1,30 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Container, Form, FormLabel, FloatingLabel, Row, Col, Button, ButtonToolbar } from 'react-bootstrap'
+import { Container, Form, FloatingLabel, Row, Col, Button, ButtonToolbar } from 'react-bootstrap'
 import { BsEgg, BsEggFill, BsEggFried } from 'react-icons/bs'
 
 function SignUpForm() {
 
     const navigate = useNavigate()
 
-    // TODO: SET USER SCHEMA FIRST 
-    // TODO: INITIALIZE USESTATE
     const [user, setUser] = useState({
-
+        username: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: ''
     })
 
     async function handleSubmit(e) {
         e.preventDefault()
-
-        await fetch(`http://localhost:5000/users/`, {
+        await fetch(`http://localhost:5000/users`, {
             method: 'POST',
             headers: {
-                'Content-type': 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(user)
         })
-
-        navigate('/recipes')
+        navigate('/')
     }
 
     return (
@@ -33,15 +33,22 @@ function SignUpForm() {
             <hr />
             <Form onSubmit={handleSubmit}>
                 <Form.Label>
-                    <h3 className='text-primary'>Personal Information</h3>
+                    <h3 className='text-primary'>
+                        Personal Information
+                        <br />
+                        {user.firstName}
+                        <br />
+                        {user.lastName}
+                        <br />
+                        {user.email}
+                    </h3>
                 </Form.Label>
                 <Row className='mb-3 g-3'>
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
-                                controlID='floating-input'
-                                label='First Name'
-                            >
+                                controlID='floatingInput'
+                                label='First Name' >
                                 <Form.Control
                                     required
                                     type='text'
@@ -57,9 +64,8 @@ function SignUpForm() {
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
-                                controlID='floating-input'
-                                label='Last Name'
-                            >
+                                controlID='floatingInput'
+                                label='Last Name' >
                                 <Form.Control
                                     required
                                     type='text'
@@ -75,10 +81,10 @@ function SignUpForm() {
                     <Form.Group>
                         <FloatingLabel
                             controlID='floatingInput'
-                            label='Email'>
+                            label='Email' >
                             <Form.Control
                                 required
-                                type='email'
+                                type='text'
                                 placeholder='Email'
                                 id='email'
                                 name='email'
@@ -90,10 +96,31 @@ function SignUpForm() {
                 </Row>
                 <hr />
                 {/* TODO: MATCHING PASSWORD INPUT CONFIRMATION */}
-                <FormLabel>
-                    <h3 className='text-primary'>Login Information</h3>
-                </FormLabel>
+                <Form.Label>
+                    <h3 className='text-primary'>
+                        Login Information
+                        <br />
+                        {user.username}
+                        <br />
+                        {user.password}
+                    </h3>
+                </Form.Label>
                 <Row className='mb-3 g-3'>
+                    <Form.Group>
+                        <FloatingLabel
+                            controlID='floatingInput'
+                            label='Username'>
+                            <Form.Control
+                                required
+                                type='text'
+                                placeholder='Username'
+                                id='username'
+                                name='username'
+                                value={user.username}
+                                onChange={e => setUser({ ...user, username: e.target.value })}
+                            />
+                        </FloatingLabel>
+                    </Form.Group>
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
@@ -101,25 +128,8 @@ function SignUpForm() {
                                 label='Password'>
                                 <Form.Control
                                     required
-                                    type='password'
+                                    type='text'
                                     placeholder='Password'
-                                    id='password'
-                                    name='password'
-                                    value={user.password}
-                                    onChange={e => setUser({ ...user, password: e.target.value })}
-                                />
-                            </FloatingLabel>
-                        </Form.Group>
-                    </Col>
-                    <Col md={12} lg={6}>
-                        <Form.Group>
-                            <FloatingLabel
-                                controlID='floatingInput'
-                                label='Confirm Password'>
-                                <Form.Control
-                                    required
-                                    type='password'
-                                    placeholder='Confirm Password'
                                     id='password'
                                     name='password'
                                     value={user.password}
@@ -130,15 +140,15 @@ function SignUpForm() {
                     </Col>
                 </Row>
                 <ButtonToolbar className='d-flex justify-content-end gap-3'>
-                    <Button variant='light' size='sm' onClick={() => navigate('/login')}>
+                    <Button variant='light' size='sm' onClick={() => navigate('/users/login')}>
                         <BsEggFried className='mb-1' /> Go to Login Page
                     </Button>
                     <Button variant='danger' size='sm' onClick={() => navigate('/')}>
                         <BsEggFill className='mb-1' /> Cancel
                     </Button>
-                    <Button variant='warning' size='sm' type='submit' >
-                        <BsEgg className='mb-1' /> Sign Up
-                    </Button>
+                        <Button variant='warning' size='sm' type='submit' >
+                            <BsEgg className='mb-1' /> Sign Up
+                        </Button>
                 </ButtonToolbar>
             </Form>
         </Container>
