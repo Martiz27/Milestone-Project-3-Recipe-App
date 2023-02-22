@@ -9,7 +9,10 @@ function CurrentRecipe() {
     const navigate = useNavigate()
 
     const { recipeId } = useParams()
+
     const [recipe, setRecipe] = useState(null)
+
+    const [fav, setFav] = useState()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,15 +25,38 @@ function CurrentRecipe() {
         fetchData()
     }, [recipeId])
 
+    useEffect(() => {
+
+    })
     // TODO: Update Loading, Add Loading Component?
     if (recipe === null) {
         return <h1>Loading</h1>
     }
 
     async function deleteRecipe() {
-        await fetch(`http://localhost:5000/recipes/${recipe._id}`, {method: 'DELETE'})
+        await fetch(`http://localhost:5000/recipes/${recipe._id}`, { method: 'DELETE' })
         navigate('/recipes')
     }
+
+    async function updateFavorite(e) {
+        let toggleFavorite = { fav: true }
+        e.preventDefault()
+        await fetch(`http://localhost:5000/recipes/${recipe._id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(toggleFavorite)
+        })
+    }
+
+    // function toggleFavorite() {
+    //     if (recipe.favorite) {
+    //         setFav(<Col><BsStar /> Add to Favorites</Col>)
+    //     } else {
+    //         setFav(<Col><BsStar /> Add to Favorites</Col>)
+    //     }
+    // }
 
     return (
         <Container className='mb-5 mx-auto p-5'>
@@ -51,10 +77,10 @@ function CurrentRecipe() {
                                     <ButtonToolbar className='d-inline-flex gap-3 justify-content-center'>
                                         <ButtonGroup className=''>
                                             <Button variant='light' size='md' onClick={() => navigate(`/recipes/${recipe._id}/edit`)}>
-                                                <BsPencilSquare /> Edit
+                                                <BsPencilSquare className='mb-1' /> Edit
                                             </Button>
                                             <Button variant='warning' size='md' type='submit' onClick={deleteRecipe}>
-                                                <BsTrashFill /> Delete
+                                                <BsTrashFill className='mb-1' /> Delete
                                             </Button>
                                         </ButtonGroup>
                                         {/*
@@ -62,13 +88,7 @@ function CurrentRecipe() {
                                         Inactive / Default State: Add to Favorites.
                                         Update Favorites value in Recipes
                                         */}
-                                        <ToggleButton variant='danger' size='md'>
-                                            {
-                                                recipe.favorite
-                                                    ? <Col><BsStarFill /> Remove From Favorites</Col>
-                                                    : <Col><BsStar /> Add to Favorites</Col>
-                                            }
-                                        </ToggleButton>
+                                        <ToggleButton variant='danger' size='md' type='checkbox' onClick={() => (recipe.favorite ? setFav(<Col><BsStarFill className='mb-1' /> Remove From Favorites</Col>) : setFav(<Col><BsStar className='mb-1' /> Add to Favorites</Col>))} checked={recipe.favorite} onChange={updateFavorite}>{fav}</ToggleButton>
                                     </ButtonToolbar>
                                 </Col>
                             </Row>
@@ -114,7 +134,7 @@ function CurrentRecipe() {
                     </Card.Footer>
                 </Row>
             </Card>
-        </Container>
+        </Container >
     )
 }
 
