@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 
 const { Recipe } = db
 
+// TODO: SEND USER.ID IN ROUTE
 // TODO: RECIPE INDEX
 router.get('/', async (req, res) => {
     const recipes = await Recipe.find().sort({ title: 1 })
