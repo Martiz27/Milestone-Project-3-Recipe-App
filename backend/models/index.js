@@ -10,3 +10,4 @@ mongoose.connect(
 )
 
 module.exports.Recipe = require('./recipe.js')
+module.exports.User = require('./user.js')
