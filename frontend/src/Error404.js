@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router'
 import { Container, Card, Row, Button } from 'react-bootstrap'
-import errorImg from './error404.jpg'
+import errorImg from './images/error404.jpg'
 import { BsArrowLeftShort } from 'react-icons/bs';
 
 function Error404() {

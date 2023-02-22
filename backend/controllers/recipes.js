@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 
 const { Recipe } = db
 
+// TODO: SEND USER.ID IN ROUTE
 // TODO: RECIPE INDEX
 router.get('/', async (req, res) => {
     const recipes = await Recipe.find().sort({ title: 1 })
@@ -45,6 +46,13 @@ router.get('/:recipeId/edit', async (req, res) => {
 
 // TODO: PUT EDIT
 router.put('/:recipeId', async (req, res) => {
+    if (req.body.fav) {
+        await Recipe.updateOne(
+            { _id: req.params.recipeId },
+            [{ '$set': { 'favorite': { '$eq': [false, '$favorite'] } } }]
+        )
+        console.log('tried to update fav')
+    }
     if (!req.body.image) {
         req.body.image = 'https://images.unsplash.com/photo-1576186726580-a816e8b12896?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80'
     }
@@ -57,7 +65,6 @@ router.put('/:recipeId', async (req, res) => {
         })
 
 })
-
 // TODO: SHOW
 router.get('/:recipeId', async (req, res) => {
     let recipeId = req.params.recipeId

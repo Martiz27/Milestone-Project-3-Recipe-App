@@ -8,13 +8,23 @@ function LoginForm() {
 
     const navigate = useNavigate()
 
-    const {setCurrentUser} = useContext(CurrentUser)
+    const { setCurrentUser } = useContext(CurrentUser)
 
     // TODO: SET USER SCHEMA FIRST 
     // TODO: INITIALIZE USESTATE
-    const [userCred, setUserCred] = useState({
-
+    const [credentials, setCredentials] = useState({
+        email: '',
+        password: ''
     })
+
+    // TODO:
+    // API send to MONGODB verify if valid user and pw or invalid user or pw
+    // if correct res
+    // session on local storage  
+    // usersession obj
+    // user id in recipe
+    // retrieve user list of recipes based on usersession id
+    // userContext ^
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -33,7 +43,7 @@ function LoginForm() {
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
-                                controlID='floatingInput'
+                                id='floatingInput'
                                 label='Email'>
                                 <Form.Control
                                     required
@@ -41,8 +51,8 @@ function LoginForm() {
                                     placeholder='Email'
                                     id='email'
                                     name='email'
-                                    value={userCred.email}
-                                    onChange={e => setUserCred({ ...userCred, email: e.target.value })}
+                                    value={credentials.email}
+                                    onChange={e => setCredentials({ ...credentials, email: e.target.value })}
                                 />
                             </FloatingLabel>
                         </Form.Group>
@@ -50,7 +60,7 @@ function LoginForm() {
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
-                                controlID='floatingInput'
+                                id='floatingInput'
                                 label='Password'>
                                 <Form.Control
                                     required
@@ -58,15 +68,15 @@ function LoginForm() {
                                     placeholder='Password'
                                     id='password'
                                     name='password'
-                                    value={userCred.password}
-                                    onChange={e => setUserCred({ ...userCred, password: e.target.value })}
+                                    value={credentials.password}
+                                    onChange={e => setCredentials({ ...credentials, password: e.target.value })}
                                 />
                             </FloatingLabel>
                         </Form.Group>
                     </Col>
                 </Row>
                 <ButtonToolbar className='d-flex justify-content-end gap-3'>
-                    <Button variant='light' size='sm' type='submit' onClick={() => navigate('/signup')}>
+                    <Button variant='light' size='sm' type='submit' onClick={() => navigate('/users/signup')}>
                         <BsEgg className='mb-1' /> Go to Sign Up Page
                     </Button>
                     <Button variant='danger' size='sm' onClick={() => navigate('/')}>

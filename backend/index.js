@@ -6,6 +6,8 @@ const cors = require('cors')
 const path = require('path')
 const app = express()
 const PORT = process.env.PORT
+const mongoose = require('mongoose')
+mongoose.set('strictQuery', true);
 
 // Express Settings
 app.use(cors())
@@ -13,7 +15,7 @@ app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-// Controllers and Routes
+// Controllers 
 app.use('/recipes', require('./controllers/recipes.js'))
 app.use('/users', require('./controllers/users.js'))
 
