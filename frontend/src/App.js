@@ -17,24 +17,18 @@ import CurrentUserProvider from './contexts/CurrentUser'
 
 function App() {
   return (
-    // TODO: Testing Components
-    // <div className="App">
-    //   <StickyFooter />
-    //   <RecipeIndex />
-    // </div>
-
-    // TODO: Finish Building Out SRC Components and Routes
+    // TODO: Finish Building Out Current User Provider
     // <CurrentUserProvider>
     <BrowserRouter>
       <StickyFooter />
       <Routes>
-        {/* <Route exact path='/' element={<WelcomePage />} />
-          <Route exact path='/signup' element={<SignUpForm />} />
-          <Route exact path='/login' element={<LoginForm />} /> */}
+        <Route exact path='/' element={<WelcomePage />} />
+        <Route exact path='/signup' element={<SignUpForm />} />
+        <Route exact path='/login' element={<LoginForm />} />
         <Route exact path='/recipes' element={<RecipeIndex />} />
         <Route exact path='/recipes/:recipeId' element={<CurrentRecipe />} />
         <Route exact path='/recipes/new' element={<NewRecipeForm />} />
-        <Route exact path='/recipes/:recipeId/edit' element={<EditRecipeForm />} /> 
+        <Route exact path='/recipes/:recipeId/edit' element={<EditRecipeForm />} />
         <Route path='/' element={<Error404 />} />
       </Routes>
     </BrowserRouter>
