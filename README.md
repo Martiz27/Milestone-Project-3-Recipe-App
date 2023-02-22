@@ -20,44 +20,46 @@ Our inspiration for the app comes from our love of food and cooking.
 
 ## Technologies
 
-Node, Express, React, (SQL / Mongo), (ORM / ODM), Bootstrap, SASS
+Node, Express, React, MongoDB, (ORM / ODM), React-Bootstrap
 
 ## Other Information
 ### Routes
 
-| Method | Path                   | Purpose                   | Redirect Path*        |
-| ------ | ---------------------- | ------------------------- | --------------------- |
-| GET    | `/`                    | Welcome Page              | `/signup` or `/login` |
-| POST   | `/signup`              | User Signup Page          | `/recipes`            |
-| GET    | `/login`               | User Login Page           | `/recipes`            |
-| GET    | `/recipes/`            | Recipes Index Page        |                       |
-| GET    | `/recipes/:categoryId` | Filter by Recipe Category |                       |
-| POST   | `/recipes/new`         | New Recipe Form           | `/recipes/:id`        |
-| GET    | `/recipes/:id`         | View Recipe               |                       |
-| PUT    | `/recipes/:id/edit`    | Edit Recipe Form          | `/recipes/:id`        |
-| DELETE | `/recipes/:id`         | Delete Recipe             | `/recipes`            |
-| GET    | `*`                    | 404 Page                  |                       |
+| Method | Path                      | Purpose                   | Redirect Path*        |
+| ------ | ------------------------- | ------------------------- | --------------------- |
+| GET    | `/`                       | Welcome Page              | `/signup` or `/login` |
+| POST   | `/signup`                 | User Signup Page          | `/recipes`            |
+| GET    | `/login`                  | User Login Page           | `/recipes`            |
+| GET    | `/recipes/`               | Recipes Index Page        |                       |
+| POST   | `/recipes/new`            | New Recipe Form           | `/recipes/:recipeId`  |
+| GET    | `/recipes/:recipeId`      | View Recipe               |                       |
+| PUT    | `/recipes/:recipeId/edit` | Edit Recipe Form          | `/recipes/:recipeId`  |
+| DELETE | `/recipes/:recipeId`      | Delete Recipe             | `/recipes`            |
+| GET    | `/recipes/:categoryId`    | Filter by Recipe Category |                       |
+| GET    | `*`                       | 404 Page                  |                       |
 
 ### Recipes
 
-| Data          | Type                   | Info                                                 |
-| ------------- | ---------------------- | ---------------------------------------------------- |
-| `id`          | Object ID              | Recipe ID                                            |
-| `title`       | String                 | Recipe Title                                         |
-| `category`    | String or Booleans     | Recipe Category (breakfast, lunch, dinner, or snack) |
-| `ingredients` | String or String Array | Recipe Ingredients                                   |
-| `directions`  | String or String Array | Recipe Directions                                    |
-| `pic`         | String                 | Recipe Image                                         |
-| `favorited`   | Boolean                | If Recipe is in Favorites                            |
+| Data          | Type               | Info                                                   |
+| ------------- | ------------------ | ------------------------------------------------------ |
+| `_id`         | Object ID          | Recipe ID                                              |
+| `title`       | String             | Recipe Title                                           |
+| `category`    | String or Booleans | Recipe Category (breakfast, lunch, dinner, or dessert) |
+| `ingredients` | String             | Recipe Ingredients                                     |
+| `directions`  | String             | Recipe Directions                                      |
+| `pic`         | String             | Recipe Image                                           |
+| `favorite`    | Boolean            | If Recipe is in Favorites                              |
+| `source`      | String             | Recipe Source                                          |
+| `description` | String             | Recipe Description                                     |
 
 ### Users
 
-| Data | Type      | Info     |
-| ---- | --------- | -------- |
-| `id` | Object ID | User ID  |
-|      |           | Password |
-|      | String    | Email    |
-|      | String    | Name     | 
+| Data   | Type      | Info     |
+| ------ | --------- | -------- |
+| `uuid` | Object ID | User ID  |
+|        |           | Password |
+|        | String    | Email    |
+|        | String    | Name     |
 
 - - -
 ### Pitfalls

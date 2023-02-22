@@ -2,42 +2,50 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose;
 
 const recipeSchema = Schema({
-    title: { 
-        type: String, 
+    title: {
+        type: String,
         required: true
     },
-    breakfast: { 
-        type: Boolean, 
+    breakfast: {
+        type: Boolean,
         default: false
     },
-    lunch: { 
-        type: Boolean, 
+    lunch: {
+        type: Boolean,
         default: false
     },
-    dinner: { 
-        type: Boolean, 
+    dinner: {
+        type: Boolean,
         default: false
     },
-    snack: { 
-        type: Boolean, 
+    dessert: {
+        type: Boolean,
         default: false
     },
-    favorite: { 
-        type: Boolean, 
+    favorite: {
+        type: Boolean,
         default: false
     },
-    ingredients: { 
+    ingredients: {
         type: String,
         require: true
     },
-    directions: { 
+    directions: {
         type: String,
         require: true
     },
-    image: { 
+    image: {
         type: String,
         default: 'https://images.unsplash.com/photo-1576186726580-a816e8b12896?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80' //Photo by No Revisions on Unsplash
-    } 
+    },
+    source: {
+        type: String,
+        default: `Grandma's Cookbook`
+    },
+    description: {
+        type: String,
+        required: true
+    }
 })
 
 const Recipe = mongoose.model('Recipe', recipeSchema)

@@ -1,9 +1,30 @@
 // currentuser context after login or sign up
 import { useState, useEffect } from 'react'
-import { Container, Row, Col, Card, Button, ButtonGroup, ButtonToolbar, ToggleButton } from 'react-bootstrap'
-// Button Group with Edit Anchor, Delete Anchor, Favorites Radio
+import { useNavigate } from 'react-router'
+import { Container, Row, Col, Card, Button} from 'react-bootstrap'
+import { BsArrowRightShort } from 'react-icons/bs'
+import Masonry from 'react-masonry-css'
 
 function RecipeIndex(data) {
+
+    // Bootstrap Breakpoints:
+    // xxl: 1400
+    // xl: 1200
+    // lg: 992
+    // md: 768
+    // sm: 576
+    // xs: <576
+
+    // Masonry Breakpoints
+    const masonryBreakpoint = {
+        default: 4,
+        1400: 3,
+        1000: 2,
+        770: 1,
+    }
+
+    const navigate = useNavigate()
+
     const [recipes, setRecipes] = useState([])
 
     // ${process.env.REACT_APP_SERVER_URL}
@@ -18,71 +39,49 @@ function RecipeIndex(data) {
 
     let recipesFormatted = recipes.map((recipe, index) => {
         return (
-            <Col key={index}>
-                <Card style={{ width: '300px' }}>
-                    {/* TODO: Get Recipe Name */}
-                    <Card.Header><h3>{recipe.title}</h3></Card.Header>
-                    <Card.Img src={recipe.image} className='img-fluid rounded-0'></Card.Img>
+            <Card key={index} style={{ width: '300px' }}>
+                <Card.Img src={recipe.image} className='img-fluid rounded-0' />
+                <Card.ImgOverlay className='bg-dark bg-opacity-75 text-light '>
+                    <Card.Title><h3>{recipe.title}</h3></Card.Title>
                     <Card.Body>
-                        <Row className='text-muted'>
+                        <Row className='fst-italic fw-bold'>
                             {
                                 recipe.breakfast
-                                    ? <Col key='breakfast'> #breakfast </Col>
+                                    ? <Col key='breakfast'> #breakfast</Col>
                                     : ' '
                             }
                             {
                                 recipe.lunch
-                                    ? <Col key='lunch'> #lunch </Col>
+                                    ? <Col key='lunch'> #lunch</Col>
                                     : ' '
                             }
                             {
                                 recipe.dinner
-                                    ? <Col key='dinner'> #dinner </Col>
+                                    ? <Col key='dinner'> #dinner</Col>
                                     : ' '
                             }
                             {
                                 recipe.dessert
-                                    ? <Col key='dessert'> #dessert </Col>
+                                    ? <Col key='dessert'> #dessert</Col>
                                     : ' '
                             }
                         </Row>
-                        <br />
-                        <ButtonToolbar className='mb-3'>
-                            <ButtonGroup className='me-5'>
-                                <Button variant='light' size='sm'>Edit</Button>
-                                <Button variant='warning' size='sm'>Delete</Button>
-                            </ButtonGroup>
-                            <ButtonGroup>
-                                {/* TODO: Radio Button, Active State: Remove from Favorites,
-                                    Inactive / Default State: Add to Favorites. 
-                                    Update Favorites value in Recipes 
-                                */}
-                                <ToggleButton variant='danger' size='sm'>Add to Favorites</ToggleButton>
-                            </ButtonGroup>
-                        </ButtonToolbar>
-                        <h5>Ingredients</h5>
-                        <ul>
-                            {recipe.ingredients.split('.').map((ingredient, index) => {
-                                return <li key={index}>{ingredient}</li>
-                            })}
-                        </ul>
-                        <h5>Directions</h5>
-                        <ol>
-                            {recipe.directions.split('.').map((direction, index) => {
-                                return <li key={index}>{direction}</li>
-                            })}
-                        </ol>
                     </Card.Body>
-                </Card>
-            </Col>
+                    <Row className='ms-1 mb-3 position-absolute bottom-0'>
+                        <Button variant='light' size='sm' onClick={() => navigate(`/recipes/${recipe._id}`)}>Open Recipe <BsArrowRightShort /></Button>
+                    </Row>
+                </Card.ImgOverlay>
+            </Card >
         )
     })
 
     return (
-        <Container className='my-5 mx-5'>
-            <Row xs={1} md={2} lg={4} className="g-3">
+        <Container className='my-5 mx-auto pb-5'>
+            <Masonry breakpointCols={masonryBreakpoint}
+                className="masonry-grid"
+                columnClassName="masonry-grid_column">
                 {recipesFormatted}
-            </Row>
+            </Masonry>
         </Container>
     )
 }
