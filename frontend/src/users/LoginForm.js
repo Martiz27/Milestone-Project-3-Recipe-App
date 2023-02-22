@@ -8,7 +8,7 @@ function LoginForm() {
 
     const navigate = useNavigate()
 
-    const {setCurrentUser} = useContext(CurrentUser)
+    const { setCurrentUser } = useContext(CurrentUser)
 
     // TODO: SET USER SCHEMA FIRST 
     // TODO: INITIALIZE USESTATE
@@ -66,7 +66,7 @@ function LoginForm() {
                     </Col>
                 </Row>
                 <ButtonToolbar className='d-flex justify-content-end gap-3'>
-                    <Button variant='light' size='sm' type='submit' onClick={() => navigate('/signup')}>
+                    <Button variant='light' size='sm' type='submit' onClick={() => navigate('/users/signup')}>
                         <BsEgg className='mb-1' /> Go to Sign Up Page
                     </Button>
                     <Button variant='danger' size='sm' onClick={() => navigate('/')}>
