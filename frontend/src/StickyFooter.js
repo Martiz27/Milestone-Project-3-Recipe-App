@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap'
+import { Container, Navbar, Nav, Button, Form, InputGroup } from 'react-bootstrap'
+import { BsSearch, BsStarFill, BsPlus, BsEgg, BsEggFill } from 'react-icons/bs'
 
 // TODO: Make nav horizontally aligned and positioned on the bottom
 function StickyFooter() {
@@ -7,44 +8,42 @@ function StickyFooter() {
 
     return (
         <Navbar collapseOnSelect expand='md' bg='light' fixed='bottom' fill='true'>
-            <Container className=''>
-                <Navbar.Brand onClick={() => navigate('/recipes')}>FEAST MODE</Navbar.Brand>
-                <Navbar.Toggle />
+            <Container>
+                <Navbar.Brand onClick={() => navigate('/recipes')} className='text-danger'>
+                    FEAST MODE
+                </Navbar.Brand>
+                <Navbar.Toggle className='my-2' />
                 <Navbar.Collapse id='responsive-navbar-nav' >
-                    <Nav variant='pills' className='justify-content-around' style={{ flex: 1 }}>
-                        <NavDropdown align='end' drop='up' title='Categories' id='categories-dropdown'>
-                            <NavDropdown.Item>
-                                Breakfast
-                            </NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item>
-                                Lunch
-                            </NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item>
-                                Dinner
-                            </NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item>
-                                Dessert
-                            </NavDropdown.Item>
-                        </NavDropdown>
+                    <Nav variant='pills' className='justify-content-around g-2' style={{ flex: 1 }}>
                         <Nav.Item>
-                            <Nav.Link href=''>
-                                Favorites
-                            </Nav.Link>
+                            <InputGroup className='d-flex p-1'>
+                                <InputGroup.Text id='search'><BsSearch /></InputGroup.Text>
+                                <Form.Control
+                                    placeholder='Search for Category'
+                                />
+                            </InputGroup>
                         </Nav.Item>
-                        <Nav.Item>
-                            <Nav.Link onClick={() => navigate('/recipes/new')}>
-                                Add New Recipe
-                            </Nav.Link>
+                        <Nav.Item className='d-flex p-1'>
+                            <Button variant='light' size='sm' onClick={() => navigate('/')}>
+                                <BsStarFill className='mb-1' /> Favorites
+                            </Button>
                         </Nav.Item>
-                        {/* TODO: User Context */}
-                        <NavDropdown align='end' drop='up' title='User' id='user-dropdown'>
-                            <NavDropdown.Item>
-                                Logout
-                            </NavDropdown.Item>
-                        </NavDropdown>
+                        <Nav.Item className='d-flex p-1'>
+                            <Button variant='light' size='sm' onClick={() => navigate('/recipes/new')}>
+                                <BsPlus className='mb-1' /> Add Recipe
+                            </Button>
+                        </Nav.Item>
+                        <Nav.Item className='d-flex p-1'>
+                            <Button variant='light' size='sm' onClick={() => navigate('/')}>
+                                <BsEgg className='mb-1' /> Help
+                            </Button>
+                        </Nav.Item>
+                        {/* TODO: Update Navigate Path For Logout Button */}
+                        <Nav.Item className='d-flex p-1'>
+                            <Button variant='danger' size='sm' onClick={() => navigate('/')}>
+                                <BsEggFill className='mb-1' /> Logout
+                            </Button>
+                        </Nav.Item>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
