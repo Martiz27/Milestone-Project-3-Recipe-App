@@ -1,8 +1,8 @@
 // currentuser context after login or sign up
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
-import { Container, Row, Col, Card, Button} from 'react-bootstrap'
-import { BsArrowRightShort } from 'react-icons/bs'
+import { Container, Row, Col, Card, Button, OverlayTrigger, Popover } from 'react-bootstrap'
+import { BsArrowRightShort, BsStarFill } from 'react-icons/bs'
 import Masonry from 'react-masonry-css'
 
 function RecipeIndex(data) {
@@ -38,40 +38,48 @@ function RecipeIndex(data) {
     }, [])
 
     let recipesFormatted = recipes.map((recipe, index) => {
+        const popover = <Popover id={index}>
+            <Popover.Header as='h3' className='text-primary'>{recipe.title} <span className='text-danger'>Tags</span></Popover.Header>
+            <Popover.Body style={{ "minHeight": "10px", "minWidth": "100px" }} className='fst-italic'>
+                {recipe.category.slice(1).map((tag, index) => {
+                    return <Col key={index}># {tag}</Col>
+                })}
+            </Popover.Body>
+        </Popover>
+
         return (
             <Card key={index} style={{ width: '300px' }}>
-                <Card.Img src={recipe.image} className='img-fluid rounded-0' />
+                <Card.Img src={recipe.image} className='img-fluid rounded-2' />
                 <Card.ImgOverlay className='bg-dark bg-opacity-75 text-light '>
                     <Card.Title><h3>{recipe.title}</h3></Card.Title>
-                    <Card.Body>
-                        <Row className='fst-italic fw-bold'>
-                            {
-                                recipe.breakfast
-                                    ? <Col key='breakfast'> #breakfast</Col>
-                                    : ' '
-                            }
-                            {
-                                recipe.lunch
-                                    ? <Col key='lunch'> #lunch</Col>
-                                    : ' '
-                            }
-                            {
-                                recipe.dinner
-                                    ? <Col key='dinner'> #dinner</Col>
-                                    : ' '
-                            }
-                            {
-                                recipe.dessert
-                                    ? <Col key='dessert'> #dessert</Col>
-                                    : ' '
-                            }
-                        </Row>
-                    </Card.Body>
-                    <Row className='ms-1 mb-3 position-absolute bottom-0'>
-                        <Button variant='light' size='sm' onClick={() => navigate(`/recipes/${recipe._id}`)}>Open Recipe <BsArrowRightShort /></Button>
+                    <Row className='fst-italic'>
+                        {
+                            recipe.category.length >= 2
+                                ? <Col>#{recipe.category[0]} <OverlayTrigger trigger={['hover', 'focus']} placement='right' overlay={popover}><span className='text-warning fw-normal text-decoration-underline'> more tags</span></OverlayTrigger></Col>
+                                :
+                                recipe.category.map((tag, index) => {
+                                    return <Col key={index}># {tag}</Col>
+                                })
+                        }
+                    </Row>
+                    <Row className='ms-0.5 mb-3 position-absolute bottom-0 w-100'>
+                        <Col className='me-4'>
+                            <Button variant='light' size='sm' onClick={() => navigate(`/recipes/${recipe._id}`)}>
+                                Open Recipe <BsArrowRightShort />
+                            </Button>
+                        </Col>
+                        {
+                            recipe.favorite
+                                ? <Col>
+                                    <Button variant='danger' size='sm'>
+                                        <BsStarFill className='mb-1' /> In Favorites
+                                    </Button>
+                                </Col>
+                                : <span></span>
+                        }
                     </Row>
                 </Card.ImgOverlay>
-            </Card >
+            </Card>
         )
     })
 

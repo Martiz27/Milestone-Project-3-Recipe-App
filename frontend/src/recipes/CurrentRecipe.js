@@ -50,6 +50,19 @@ function CurrentRecipe() {
         })
     }
 
+    function convertDate(jsonCreated, jsonUpdated) {
+        if (jsonCreated === jsonUpdated) {
+            return <Col>Added on {new Date(jsonCreated).toDateString()}</Col>
+        } else {
+            return (
+                <>
+                    <Col>Added on {new Date(jsonCreated).toDateString()}</Col>
+                    <Col>Updated on {new Date(jsonUpdated).toDateString()}</Col>
+                </>
+            )
+        }
+    }
+
     // function toggleFavorite() {
     //     if (recipe.favorite) {
     //         setFav(<Col><BsStar /> Add to Favorites</Col>)
@@ -67,7 +80,15 @@ function CurrentRecipe() {
                     <Col sm={12} md={6} lg={4}>
                         <Card.Body>
                             <Card.Img src={recipe.image} className='img-fluid rounded-2'></Card.Img>
-                            <Card.Text className='fst-italic fw-bold p-1'>{recipe.description}</Card.Text>
+                            <Card.Text className='fst-italic fw-bold p-1'>
+                                {recipe.description}
+                                <br />
+                                <Row className='d-inline-flex fw-normal text-muted fst-italic my-1'>
+                                    {recipe.category.map((tag, index) => {
+                                        return <Col key={index}>#{tag}</Col>
+                                    })}
+                                </Row>
+                            </Card.Text>
                         </Card.Body>
                     </Col>
                     <Col sm={12} md={6} lg={8}>
@@ -108,29 +129,8 @@ function CurrentRecipe() {
                         </Card.Body>
                     </Col>
                     <Card.Footer className='text-center text-muted fst-italic'>
-                        Source: {recipe.source}
-                        <Row className='text-muted fst-italic my-1'>
-                            {
-                                recipe.breakfast
-                                    ? <Col key='breakfast'> #breakfast</Col>
-                                    : ' '
-                            }
-                            {
-                                recipe.lunch
-                                    ? <Col key='lunch'> #lunch</Col>
-                                    : ' '
-                            }
-                            {
-                                recipe.dinner
-                                    ? <Col key='dinner'> #dinner</Col>
-                                    : ' '
-                            }
-                            {
-                                recipe.dessert
-                                    ? <Col key='dessert'> #dessert</Col>
-                                    : ' '
-                            }
-                        </Row>
+                        <Col>Source: {recipe.source}</Col>
+                        {convertDate(recipe.createdAt, recipe.updatedAt)}
                     </Card.Footer>
                 </Row>
             </Card>
