@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Container, Form, FormLabel, FloatingLabel, Row, Col, Button, ButtonToolbar } from 'react-bootstrap'
+import { Container, Form, FloatingLabel, Row, Col, Button, ButtonToolbar } from 'react-bootstrap'
 import { BsEgg, BsEggFill, BsEggFried } from 'react-icons/bs'
 import { CurrentUser } from '../contexts/CurrentUser'
 
