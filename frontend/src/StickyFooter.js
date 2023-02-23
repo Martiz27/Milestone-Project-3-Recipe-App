@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Container, Navbar, Nav, Button, Form, InputGroup } from 'react-bootstrap'
 import { BsSearch, BsStarFill, BsPlus, BsEgg, BsEggFill } from 'react-icons/bs'
-import Cookies from 'universal-cookie'
+// import Cookies from 'universal-cookie'
 import { CurrentUser } from './contexts/CurrentUser';
 
 // TODO: Make nav horizontally aligned and positioned on the bottom
@@ -12,7 +12,7 @@ function StickyFooter() {
 
     const cookies = new Cookies()
 
-    const token = cookies.get('TOKEN')
+    // const token = cookies.get('token')
 
     const { currentUser, setCurrentUser } = useContext(CurrentUser)
 
@@ -29,12 +29,13 @@ function StickyFooter() {
             //     body: JSON.stringify(currentUser)
             // })
 
-            console.log('Destroying token')
-            cookies.remove(token, { path: '/' })
+            console.log('Logging out... Destroying token...')
+            // cookies.remove(token, { path: '/' })
+            localStorage.clear()
             setCurrentUser(null)
-            navigate('/')
+            navigate('/home')
         } catch (err) {
-            console.log(err)
+            console.log(`Logout Error: ${err}`)
         }
     }
 
@@ -42,7 +43,7 @@ function StickyFooter() {
         <>
             <Navbar bg='light' fixed='bottom' fill='true'>
                 <Container>
-                    <Navbar.Brand onClick={() => navigate('/')}>
+                    <Navbar.Brand onClick={() => navigate('/home')}>
                         FEAST MODE
                     </Navbar.Brand>
                     <Nav variant='pills' className='justify-content-around g-2' style={{ flex: 1 }}>
@@ -93,7 +94,7 @@ function StickyFooter() {
                                     </Button>
                                 </Nav.Item>
                                 <Nav.Item className='d-flex p-1'>
-                                    <Button variant='light' size='sm' onClick={() => navigate('/info/help')}>
+                                    <Button variant='light' size='sm' onClick={() => navigate('/recipes/info/help')}>
                                         <BsEgg className='mb-1' /> Help
                                     </Button>
                                 </Nav.Item>
