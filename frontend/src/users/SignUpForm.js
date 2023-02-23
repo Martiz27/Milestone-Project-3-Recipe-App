@@ -27,7 +27,7 @@ function SignUpForm() {
         }
         
         setValidated(true)
-        await fetch(`http://localhost:5000/users`, {
+        await fetch(`http://localhost:5000/users/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
