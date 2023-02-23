@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Container, Form, FloatingLabel, Row, Col, Button } from 'react-bootstrap';
 import { BsPlus } from 'react-icons/bs'
@@ -9,10 +9,7 @@ function NewRecipeForm() {
 
     const [recipe, setRecipe] = useState({
         "title": '',
-        "breakfast": null,
-        "lunch": null,
-        "dinner": null,
-        "dessert": null,
+        "category": [],
         "favorite": false,
         "ingredients": '',
         "directions": '',
@@ -22,6 +19,11 @@ function NewRecipeForm() {
     })
 
     async function handleSubmit(e) {
+        // console.log(e.target[4].value)
+        // let tagArray = e.target[4].value.split(/\r?\n/)
+        // console.log(tagArray)
+        // setRecipe({ ...recipe, category: tagArray })
+
         e.preventDefault()
         await fetch(`http://localhost:5000/recipes`, {
             method: 'POST',
@@ -115,47 +117,23 @@ function NewRecipeForm() {
 
                 <hr />
 
-                <Row className='mb-4'>
+                <Form.Group >
                     <Form.Label>
                         Categories
                     </Form.Label>
-                    <Form.Group as={Col} id="BreakfastCheck">
-                        <Form.Check
-                            type="checkbox"
-                            label="Breakfast"
-                            id='breakfast'
-                            name='breakfast'
-                            onChange={e => setRecipe({ ...recipe, breakfast: e.target.checked })}
-                        />
-                    </Form.Group>
-                    <Form.Group as={Col} id="LunchCheck">
-                        <Form.Check
-                            type="checkbox"
-                            label="Lunch"
-                            id='lunch'
-                            name='lunch'
-                            onChange={e => setRecipe({ ...recipe, lunch: e.target.checked })}
-                        />
-                    </Form.Group>
-                    <Form.Group as={Col} id="DinnerCheck">
-                        <Form.Check
-                            type="checkbox"
-                            label="Dinner"
-                            id='dinner'
-                            name='dinner'
-                            onChange={e => setRecipe({ ...recipe, dinner: e.target.checked })}
-                        />
-                    </Form.Group>
-                    <Form.Group as={Col} id="DessertCheck">
-                        <Form.Check
-                            type="checkbox"
-                            label="Dessert"
-                            id='dessert'
-                            name='dessert'
-                            onChange={e => setRecipe({ ...recipe, dessert: e.target.checked })}
-                        />
-                    </Form.Group>
-                </Row>
+                    <Row>
+                        <Form.Text>
+                            Separate categories by writing them on a new line.
+                        </Form.Text>
+                    </Row>
+                    <Form.Control
+                        as="textarea"
+                        className='mt-2 lh-lg'
+                        id='tags'
+                        name='tags'
+                        onChange={e => setRecipe({ ...recipe, category: e.target.value.split(/\r?\n/) })}
+                    />
+                </Form.Group>
 
                 <hr />
 
