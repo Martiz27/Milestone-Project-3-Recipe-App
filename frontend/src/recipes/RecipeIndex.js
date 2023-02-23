@@ -1,7 +1,7 @@
 // currentuser context after login or sign up
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
-import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap'
+import { Container, Row, Col, Card, Button, OverlayTrigger, Popover } from 'react-bootstrap'
 import { BsArrowRightShort, BsStarFill } from 'react-icons/bs'
 import Masonry from 'react-masonry-css'
 
@@ -27,12 +27,6 @@ function RecipeIndex(data) {
 
     const [recipes, setRecipes] = useState([])
 
-    const [showTags, setShowTags] = useState(false)
-
-    const handleClose = () => setShowTags(false)
-
-    const handleShow = () => setShowTags(true)
-
     // ${process.env.REACT_APP_SERVER_URL}
     useEffect(() => {
         const fetchData = async () => {
@@ -44,33 +38,31 @@ function RecipeIndex(data) {
     }, [])
 
     let recipesFormatted = recipes.map((recipe, index) => {
+        const popover = <Popover id={index}>
+            <Popover.Header as='h3' className='text-primary'>{recipe.title} <span className='text-danger'>Tags</span></Popover.Header>
+            <Popover.Body style={{"minHeight": "10px", "minWidth": "100px"}} className='fst-italic'>
+                {recipe.category.slice(1).map((tag, index) => {
+                    return <Col key={index}># {tag}</Col>
+                })}
+            </Popover.Body>
+        </Popover>
+
         return (
             <Card key={index} style={{ width: '300px' }}>
                 <Card.Img src={recipe.image} className='img-fluid rounded-2' />
                 <Card.ImgOverlay className='bg-dark bg-opacity-75 text-light '>
                     <Card.Title><h3>{recipe.title}</h3></Card.Title>
-                    <Card.Body>
-                        <Modal show={showTags} onHide={handleClose}>
-                            <Modal.Header closeButton>
-                                {recipe.title} Tags
-                            </Modal.Header>
-                            <Modal.Body>
-                                {recipe.category.map((tag, index) => {
-                                    return <span key={index}>#{tag} </span>
-                                })}
-                            </Modal.Body>
-                        </Modal>
-                        <Row className='fst-italic fw-bold'>
+                    
+                        <Row className='fst-italic'>
                             {
-                                recipe.category.length >= 3
-                                    ? <Col>#{recipe.category[0]} <span className='text-warning fw-normal text-decoration-underline'><a onClick={handleShow}>see all tags</a></span></Col>
+                                recipe.category.length >= 2
+                                    ? <Col>#{recipe.category[0]} <OverlayTrigger trigger='hover' placement='right' overlay={popover}><span className='text-warning fw-normal text-decoration-underline'> more tags</span></OverlayTrigger></Col>
                                     :
                                     recipe.category.map((tag, index) => {
                                         return <Col key={index}># {tag}</Col>
                                     })
                             }
                         </Row>
-                    </Card.Body>
                     <Row className='ms-0.5 mb-3 position-absolute bottom-0 w-100'>
                         <Col className='me-4'>
                             <Button variant='light' size='sm' onClick={() => navigate(`/recipes/${recipe._id}`)}>
