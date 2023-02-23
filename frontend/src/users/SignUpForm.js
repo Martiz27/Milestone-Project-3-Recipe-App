@@ -25,6 +25,7 @@ function SignUpForm() {
             e.preventDefault()
             e.stopPropagation()
         }
+        
         setValidated(true)
         await fetch(`http://localhost:5000/users`, {
             method: 'POST',
@@ -33,6 +34,7 @@ function SignUpForm() {
             },
             body: JSON.stringify(user)
         })
+        
         navigate('/')
     }
 
@@ -44,12 +46,6 @@ function SignUpForm() {
                 <Form.Label>
                     <h3 className='text-primary'>
                         Personal Information
-                        <br />
-                        {user.firstName}
-                        <br />
-                        {user.lastName}
-                        <br />
-                        {user.email}
                     </h3>
                 </Form.Label>
                 <Row className='mb-3 g-3'>
@@ -121,10 +117,6 @@ function SignUpForm() {
                 <Form.Label>
                     <h3 className='text-primary'>
                         Login Information
-                        <br />
-                        {user.username}
-                        <br />
-                        {user.password}
                     </h3>
                 </Form.Label>
                 <Row className='mb-3 g-3'>
