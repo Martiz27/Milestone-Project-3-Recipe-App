@@ -15,6 +15,8 @@ const userSchema = Schema({
         unique: true,
         required: [true, "Can't be blank"],
         match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
+        minLength: 6,
+        maxLength: 32,
         index: true
     },
     firstName: {
@@ -30,6 +32,7 @@ const userSchema = Schema({
         lowercase: true,
         required: [true, "Can't be blank"],
         match: [/\S+@\S+\.\S+/, 'is invalid'],
+        //^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/ Browser regex
         minLength: 6,
         maxLength: 127,
         index: true
@@ -39,7 +42,6 @@ const userSchema = Schema({
         required: true,
         minLength: 6,
         maxLength: 127,
-        match: [/[\w\W]/, 'only letters, numbers, and special characters are allowed']
     },
     recipeList: [{
         type: Schema.Types.ObjectId,
