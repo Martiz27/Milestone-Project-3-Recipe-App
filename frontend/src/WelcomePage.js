@@ -16,11 +16,11 @@ function WelcomePage() {
                         <h3>A Recipe Library App</h3>
                     </Card.Title>
                     <ButtonToolbar className='d-flex justify-content-end gap-3'>
-                        <Button variant='light' size='sm'  onClick={() => navigate('/users/login')}>
-                            <BsEggFried className='mb-1'/> Login
+                        <Button variant='light' size='sm' onClick={() => navigate('/auth/login')}>
+                            <BsEggFried className='mb-1' /> Login
                         </Button>
-                        <Button variant='warning' size='sm' onClick={() => navigate('/users/signup')}>
-                            <BsEgg className='mb-1'/> Sign Up
+                        <Button variant='warning' size='sm' onClick={() => navigate('/user/signup')}>
+                            <BsEgg className='mb-1' /> Sign Up
                         </Button>
                     </ButtonToolbar>
                 </Card.ImgOverlay>
