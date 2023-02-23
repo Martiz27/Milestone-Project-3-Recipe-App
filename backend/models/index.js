@@ -8,6 +8,8 @@ mongoose.connect(
         useUnifiedTopology: true
     }
 )
-
+    .then(() => console.log('Successfully connected to MongoDB.'))
+    .catch(err => console.error('Connection error: ', err))
+    
 module.exports.Recipe = require('./recipe.js')
 module.exports.User = require('./user.js')
