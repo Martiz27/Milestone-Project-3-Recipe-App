@@ -7,7 +7,7 @@ function StickyFooter() {
     const navigate = useNavigate()
 
     return (
-        <Navbar collapseOnSelect expand='md' bg='light' fixed='bottom' fill='true'>
+        <Navbar collapseOnSelect expand='lg' bg='light' fixed='bottom' fill='true'>
             <Container>
                 <Navbar.Brand onClick={() => navigate('/recipes')} className='text-danger'>
                     FEAST MODE
