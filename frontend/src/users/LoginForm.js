@@ -3,19 +3,24 @@ import { useNavigate } from 'react-router-dom'
 import { Container, Form, FloatingLabel, Row, Col, Button, ButtonToolbar } from 'react-bootstrap'
 import { BsEgg, BsEggFill, BsEggFried } from 'react-icons/bs'
 import { CurrentUser } from '../contexts/CurrentUser'
+import Cookies from 'universal-cookie'
 
 function LoginForm() {
 
     const navigate = useNavigate()
 
-    const { setCurrentUser } = useContext(CurrentUser)
+    const cookies = new Cookies()
 
-    // TODO: SET USER SCHEMA FIRST 
-    // TODO: INITIALIZE USESTATE
+
+    // TODO: SET USESTATE FOR CURRENT USER PROVIDER
+    // const { setCurrentUser } = useContext(CurrentUser)
+
     const [credentials, setCredentials] = useState({
-        email: '',
+        username: '',
         password: ''
     })
+
+    const [validated, setValidated] = useState(false)
 
     // TODO:
     // API send to MONGODB verify if valid user and pw or invalid user or pw
@@ -27,33 +32,66 @@ function LoginForm() {
     // userContext ^
 
     async function handleSubmit(e) {
-        e.preventDefault()
-        navigate('/recipes')
+        try {
+            e.preventDefault()
+            const form = e.currentTarget
+
+            if (form.checkValidity() === false) {
+                e.preventDefault()
+                e.stopPropagation()
+            }
+
+            console.log(e)
+            setValidated(true)
+            const response = await fetch(`http://localhost:5000/users/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(credentials)
+            })
+
+            const data = await response.json()
+            console.log(data.token)
+
+            cookies.set('TOKEN', data.token, {
+                path: '/'
+            })
+
+            navigate('/recipes')
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     return (
         <Container className='my-5 mx-auto pb-5'>
             <h1 className='text-warning'>Login</h1>
             <hr />
-            <Form onSubmit={handleSubmit}>
+            <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Form.Label>
-                    <h3 className='text-primary'>Enter Email and Password</h3>
+                    <h3 className='text-primary'>Enter Username and Password</h3>
                 </Form.Label>
                 <Row className='mb-3 g-3'>
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
-                                id='floatingInput'
-                                label='Email'>
+                                id='floatingUsername'
+                                label='Username'>
                                 <Form.Control
                                     required
-                                    type='email'
-                                    placeholder='Email'
-                                    id='email'
-                                    name='email'
-                                    value={credentials.email}
-                                    onChange={e => setCredentials({ ...credentials, email: e.target.value })}
+                                    type='text'
+                                    minLength='6'
+                                    maxLength='32'
+                                    placeholder='Username'
+                                    id='username'
+                                    name='username'
+                                    value={credentials.username}
+                                    onChange={e => setCredentials({ ...credentials, username: e.target.value })}
                                 />
+                                <Form.Control.Feedback type="invalid">
+                                    Please enter your username
+                                </Form.Control.Feedback>
                             </FloatingLabel>
                         </Form.Group>
                     </Col>
@@ -65,18 +103,23 @@ function LoginForm() {
                                 <Form.Control
                                     required
                                     type='password'
+                                    minLength='6'
+                                    maxLength='127'
                                     placeholder='Password'
                                     id='password'
                                     name='password'
                                     value={credentials.password}
                                     onChange={e => setCredentials({ ...credentials, password: e.target.value })}
                                 />
+                                <Form.Control.Feedback type="invalid">
+                                    Please enter your password
+                                </Form.Control.Feedback>
                             </FloatingLabel>
                         </Form.Group>
                     </Col>
                 </Row>
                 <ButtonToolbar className='d-flex justify-content-end gap-3'>
-                    <Button variant='light' size='sm' type='submit' onClick={() => navigate('/users/signup')}>
+                    <Button variant='light' size='sm' onClick={() => navigate('/users/signup')}>
                         <BsEgg className='mb-1' /> Go to Sign Up Page
                     </Button>
                     <Button variant='danger' size='sm' onClick={() => navigate('/')}>
