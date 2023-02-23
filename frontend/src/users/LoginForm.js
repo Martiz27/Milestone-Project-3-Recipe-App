@@ -1,19 +1,17 @@
-import { useState, useContext } from 'react'
+import { CurrentUser } from '../contexts/CurrentUser'
 import { useNavigate } from 'react-router-dom'
+import { useState, useContext } from 'react'
 import { Container, Form, FloatingLabel, Row, Col, Button, ButtonToolbar } from 'react-bootstrap'
 import { BsEgg, BsEggFill, BsEggFried } from 'react-icons/bs'
-import { CurrentUser } from '../contexts/CurrentUser'
 import Cookies from 'universal-cookie'
 
 function LoginForm() {
 
+    const { currentUser, setCurrentUser } = useContext(CurrentUser)
+
     const navigate = useNavigate()
 
     const cookies = new Cookies()
-
-
-    // TODO: SET USESTATE FOR CURRENT USER PROVIDER
-    // const { setCurrentUser } = useContext(CurrentUser)
 
     const [credentials, setCredentials] = useState({
         username: '',
@@ -22,14 +20,7 @@ function LoginForm() {
 
     const [validated, setValidated] = useState(false)
 
-    // TODO:
-    // API send to MONGODB verify if valid user and pw or invalid user or pw
-    // if correct res
-    // session on local storage  
-    // usersession obj
-    // user id in recipe
-    // retrieve user list of recipes based on usersession id
-    // userContext ^
+    const [errorMessage, setErrorMessage] = useState(null)
 
     async function handleSubmit(e) {
         try {
@@ -43,24 +34,26 @@ function LoginForm() {
 
             console.log(e)
             setValidated(true)
-            const response = await fetch(`http://localhost:5000/users/login`, {
+            const response = await fetch(`http://localhost:5000/auth/login`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(credentials)
             })
 
-            const data = await response.json()
-            console.log(data.token)
-
-            cookies.set('TOKEN', data.token, {
-                path: '/'
-            })
-
-            navigate('/recipes')
+            if (response.status === 200) {
+                console.log('setting current user and cookie')
+                setCurrentUser(credentials)
+                console.log(`Current user is logging in... ${credentials.username}`)
+                cookies.set('TOKEN', response.token, {
+                    path: '/'
+                })
+                navigate('/recipes')
+            }
+            console.log(currentUser)
         } catch (err) {
-            console.log(err)
+            console.log('error: ' + err)
         }
     }
 
@@ -119,7 +112,7 @@ function LoginForm() {
                     </Col>
                 </Row>
                 <ButtonToolbar className='d-flex justify-content-end gap-3'>
-                    <Button variant='light' size='sm' onClick={() => navigate('/users/signup')}>
+                    <Button variant='light' size='sm' onClick={() => navigate('/user/signup')}>
                         <BsEgg className='mb-1' /> Go to Sign Up Page
                     </Button>
                     <Button variant='danger' size='sm' onClick={() => navigate('/')}>
