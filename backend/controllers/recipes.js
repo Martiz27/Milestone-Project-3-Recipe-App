@@ -26,7 +26,13 @@ router.post('/', async (req, res) => {
         req.body.source = undefined
     }
     const recipe = await Recipe.create(req.body)
-    res.json(recipe)
+    recipe.save((err, saved) => {
+        if(err){
+            next(err)
+        }
+        const ID = saved._id
+    })
+    res.status(200).json(recipe)
 })
 
 // Get Edit Recipe Form Route

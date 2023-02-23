@@ -1,11 +1,19 @@
-import { useState } from 'react'
+import { CurrentUser } from '../contexts/CurrentUser';
+import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Container, Form, FloatingLabel, Row, Col, Button } from 'react-bootstrap';
 import { BsPlus } from 'react-icons/bs'
+// import Cookies from 'universal-cookie'
 
 function NewRecipeForm() {
 
+    const { currentUser, setCurrentUser } = useContext(CurrentUser)
+
     const navigate = useNavigate()
+
+    // const cookies = new Cookies()
+
+    const [user, setUser] = useState(null)
 
     const [recipe, setRecipe] = useState({
         "title": '',
@@ -25,14 +33,34 @@ function NewRecipeForm() {
         // setRecipe({ ...recipe, category: tagArray })
 
         e.preventDefault()
-        await fetch(`http://localhost:5000/recipes`, {
+        const response = await fetch(`http://localhost:5000/recipes`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify(recipe)
         })
-        navigate('/recipes')
+
+        const newRecipe = await response.json()
+
+        // setRecipe({
+        //     ...recipe,
+        //     author: [
+        //         ...recipe.author,
+        //         currentUser._id
+        //     ]
+        // })
+
+        setUser({
+            ...user,
+            recipeList: [
+                ...user.recipeList,
+                recipe._id
+            ]
+        })
+
+        navigate(`/recipes/${newRecipe._id}`)
     }
 
     return (
