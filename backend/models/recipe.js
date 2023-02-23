@@ -2,25 +2,21 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose;
 
 const recipeSchema = Schema({
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     title: {
         type: String,
         required: true
     },
-    breakfast: {
-        type: Boolean,
-        default: false
-    },
-    lunch: {
-        type: Boolean,
-        default: false
-    },
-    dinner: {
-        type: Boolean,
-        default: false
-    },
-    dessert: {
-        type: Boolean,
-        default: false
+    category: {
+        type: Array,
+        items: {
+            type: String
+        },
+        maxItems: [20, 'That is a lot of tags'],
+        uniqueItems: true
     },
     favorite: {
         type: Boolean,
@@ -28,11 +24,11 @@ const recipeSchema = Schema({
     },
     ingredients: {
         type: String,
-        require: true
+        require: [true, 'How will you know what to add into your recipe?']
     },
     directions: {
         type: String,
-        require: true
+        require: [true, 'At least one direction would be nice?']
     },
     image: {
         type: String,
@@ -46,7 +42,7 @@ const recipeSchema = Schema({
         type: String,
         required: true
     }
-})
+}, { timestamps: true })
 
 const Recipe = mongoose.model('Recipe', recipeSchema)
 
