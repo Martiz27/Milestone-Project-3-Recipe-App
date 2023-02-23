@@ -4,10 +4,6 @@ const uniqueValidator = require('mongoose-unique-validator')
 const bcrypt = require('bcrypt')
 const SALT_WORK_FACTOR = 10;
 
-// Resources for creating a user schema and validation
-// https://gist.github.com/jzellis/41038ac461433b32174a8c556f5aff76
-// https://thinkster.io/tutorials/node-json-api/creating-the-user-model
-
 const userSchema = Schema({
     username: {
         type: String,
@@ -61,10 +57,10 @@ userSchema.pre("save", function (next) {
     next();
 })
 
-// compare password
-userSchema.methods.comparePassword = function (plaintext, callback) {
-    return callback(null, bcrypt.compareSync(plaintext, this.password));
-}
+// // compare password
+// userSchema.methods.comparePassword = function (plaintext, callback) {
+//     return callback(null, bcrypt.compareSync(plaintext, this.password));
+// }
 
 const User = mongoose.model('User', userSchema)
 
