@@ -4,14 +4,20 @@ const mongoose = require('mongoose')
 
 const { Recipe } = db
 
-// TODO: SEND USER.ID IN ROUTE
-// TODO: RECIPE INDEX
+// TODO: Send User.id into recipe index route to set filter for find, only show current user's recipes
+
+// TODO: Fix ObjectId type error check in edit form and show recipe routes
+
+// TODO: update post and put recipe routes to match new recipe schema
+
+// Recipe Index Route
 router.get('/', async (req, res) => {
+    const query = req.query.category
     const recipes = await Recipe.find().sort({ title: 1 })
     res.json(recipes)
 })
 
-// TODO: POST NEW
+// Post New Recipe Route
 router.post('/', async (req, res) => {
     if (!req.body.image) {
         req.body.image = undefined
@@ -23,20 +29,13 @@ router.post('/', async (req, res) => {
     res.json(recipe)
 })
 
-// // TODO: SHOW BY CATEGORY
-// router.get('/:category', async (req, res) => {
-//     const recipes = await Recipe.find({[req.params.category]: {$eq: true}})
-//     console.log(recipes)
-//     res.json(recipes)
-// })
-
-// TODO: EDIT FORM
+// Get Edit Recipe Form Route
 router.get('/:recipeId/edit', async (req, res) => {
-    let recipeId = req.params.recipeId
+    let id = req.params.recipeId
     // if (!mongoose.Types.ObjectId.isValid(req.param.recipeId)) {
     //     return res.status(404).json({message: 'Recipe id is not valid'})
     // }
-    const recipe = await Recipe.findById(req.params.recipeId)
+    const recipe = await Recipe.findById(id)
     if (!recipe) {
         return res.status(404).json({ message: 'Recipe does not exist.' })
     }
@@ -44,7 +43,7 @@ router.get('/:recipeId/edit', async (req, res) => {
     res.status(200).json(recipe)
 })
 
-// TODO: PUT EDIT
+// Put Updated Recipe Route
 router.put('/:recipeId', async (req, res) => {
     if (req.body.fav) {
         await Recipe.updateOne(
@@ -65,14 +64,15 @@ router.put('/:recipeId', async (req, res) => {
         })
 
 })
-// TODO: SHOW
+
+// Show Individual Recipe Route
 router.get('/:recipeId', async (req, res) => {
-    let recipeId = req.params.recipeId
+    let id = req.params.recipeId
     // FIXIT: id error check
     // if (!mongoose.Types.ObjectId.isValid(req.param.recipeId)) {
     //     return res.status(404).json({message: 'Recipe id is not valid'})
     // }
-    const recipe = await Recipe.findById(req.params.recipeId)
+    const recipe = await Recipe.findById(id)
     if (!recipe) {
         return res.status(404).json({ message: 'Recipe does not exist.' })
     }
@@ -80,9 +80,10 @@ router.get('/:recipeId', async (req, res) => {
     res.status(200).json(recipe)
 })
 
-// TODO: DELETE
+// Delete Recipe Route
 router.delete('/:recipeId', async (req, res) => {
-    Recipe.findByIdAndDelete(req.params.recipeId)
+    let id = req.params.recipeId
+    Recipe.findByIdAndDelete(id)
         .then(() => {
             res.status(303).redirect('/recipes')
         })
