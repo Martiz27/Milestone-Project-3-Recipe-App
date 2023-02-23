@@ -40,7 +40,7 @@ function RecipeIndex(data) {
     let recipesFormatted = recipes.map((recipe, index) => {
         const popover = <Popover id={index}>
             <Popover.Header as='h3' className='text-primary'>{recipe.title} <span className='text-danger'>Tags</span></Popover.Header>
-            <Popover.Body style={{"minHeight": "10px", "minWidth": "100px"}} className='fst-italic'>
+            <Popover.Body style={{ "minHeight": "10px", "minWidth": "100px" }} className='fst-italic'>
                 {recipe.category.slice(1).map((tag, index) => {
                     return <Col key={index}># {tag}</Col>
                 })}
@@ -52,17 +52,16 @@ function RecipeIndex(data) {
                 <Card.Img src={recipe.image} className='img-fluid rounded-2' />
                 <Card.ImgOverlay className='bg-dark bg-opacity-75 text-light '>
                     <Card.Title><h3>{recipe.title}</h3></Card.Title>
-                    
-                        <Row className='fst-italic'>
-                            {
-                                recipe.category.length >= 2
-                                    ? <Col>#{recipe.category[0]} <OverlayTrigger trigger='hover' placement='right' overlay={popover}><span className='text-warning fw-normal text-decoration-underline'> more tags</span></OverlayTrigger></Col>
-                                    :
-                                    recipe.category.map((tag, index) => {
-                                        return <Col key={index}># {tag}</Col>
-                                    })
-                            }
-                        </Row>
+                    <Row className='fst-italic'>
+                        {
+                            recipe.category.length >= 2
+                                ? <Col>#{recipe.category[0]} <OverlayTrigger trigger={['hover', 'focus']} placement='right' overlay={popover}><span className='text-warning fw-normal text-decoration-underline'> more tags</span></OverlayTrigger></Col>
+                                :
+                                recipe.category.map((tag, index) => {
+                                    return <Col key={index}># {tag}</Col>
+                                })
+                        }
+                    </Row>
                     <Row className='ms-0.5 mb-3 position-absolute bottom-0 w-100'>
                         <Col className='me-4'>
                             <Button variant='light' size='sm' onClick={() => navigate(`/recipes/${recipe._id}`)}>
