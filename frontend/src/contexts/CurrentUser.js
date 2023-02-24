@@ -8,17 +8,22 @@ function CurrentUserProvider(props) {
 
     const cookies = new Cookies()
 
-    const [currentUser, setCurrentUser] = useState(null)
+    const [currentUser, setCurrentUser] = useState({})
 
     useEffect(() => {
         const getLoggedInUser = async () => {
-            let response = await fetch(`http://localhost:5000/auth/profile`, {
+            const response = await fetch(`http://localhost:5000/auth`, {
+                // method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${cookies.get('TOKEN')}`
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             })
-            let user = await response.json()
-            setCurrentUser(user)
+            let resData = await response.json()
+            // console.log(`Provider getting response: ${resData}`)
+            // console.log(`Provider: getting logged in user ${resData}`)
+            // if (response) {
+            //     setCurrentUser(resData)
+            // } 
         }
         getLoggedInUser()
     }, [])
