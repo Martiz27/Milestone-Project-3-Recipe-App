@@ -12,7 +12,9 @@ const { Recipe } = db
 
 // Recipe Index Route
 router.get('/', async (req, res) => {
-    const query = req.query.category
+    if(req.query.favorites) {
+        
+    }
     const recipes = await Recipe.find().sort({ title: 1 })
     res.json(recipes)
 })
