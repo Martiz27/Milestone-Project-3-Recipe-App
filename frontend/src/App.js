@@ -1,8 +1,8 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import React, { Fragment } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 // Import Contexts
@@ -38,6 +38,7 @@ function App() {
           <StickyFooter />
           <Routes>
             {/* If there exists a token then allow access to private routes in /recipes path using PrivateRoutes */}
+            <Route path="/" element={<Navigate to='/home' replace />} />
             <Route path='/' element={<PrivateRoutes component={{ Help, RecipeIndex, CurrentRecipe, NewRecipeForm, EditRecipeForm }} />} />
             <Route exact path='/recipes' element={<RecipeIndex />} />
             <Route exact path='/recipes/new' element={<NewRecipeForm />} />

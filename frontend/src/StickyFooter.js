@@ -72,8 +72,7 @@ function StickyFooter() {
     // TODO: Favorites Query Functionality
     if (currentUser != null) {
         if (Object.keys(currentUser).length) {
-            console.log(`Sticky Footer: Checking current user id... ${JSON.stringify(Object(currentUser))}`)
-
+            // console.log(`Sticky Footer: Checking current user id... ${JSON.stringify(Object(currentUser))}`)
             loginActions = (
                 <>
                     <Navbar collapseOnSelect expand='lg' bg='light' fixed='bottom' fill='true'>
