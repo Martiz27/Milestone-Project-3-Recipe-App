@@ -21,7 +21,6 @@ function LoginForm() {
     const [validated, setValidated] = useState(false)
 
     const [errorMessage, setErrorMessage] = useState(null)
-
     async function handleSubmit(e) {
         try {
             e.preventDefault()
@@ -32,9 +31,9 @@ function LoginForm() {
                 e.stopPropagation()
             }
 
-            console.log(e)
+            // console.log(e)
             setValidated(true)
-            const response = await fetch(`http://localhost:5000/auth/login`, {
+            const response = await fetch(`http://localhost:5000/auth`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -42,20 +41,68 @@ function LoginForm() {
                 body: JSON.stringify(credentials)
             })
 
+            const resData = await response.json()
+            console.log(`Current user is logging in... ${Object.keys(resData.user)}`)
+
             if (response.status === 200) {
-                console.log('setting current user and cookie')
-                setCurrentUser(credentials)
-                console.log(`Current user is logging in... ${credentials.username}`)
-                cookies.set('TOKEN', response.token, {
-                    path: '/'
-                })
+                console.log('Setting current user and token...')
+                const logged = resData.user
+                // console.log(`Logged in: ${JSON.stringify(logged)}`)
+                // console.log(`Set Current User: ${Object.keys(logged)}`)
+                setCurrentUser(logged)
+                console.log(`Current User Logged In: ${Object.keys(currentUser)}`)
+                localStorage.setItem('token', resData.token)
+                // , {
+                //     path: '/'
+                // })
                 navigate('/recipes')
             }
-            console.log(currentUser)
+            // console.log(currentUser)
         } catch (err) {
-            console.log('error: ' + err)
+            console.log('Login Form Error: ' + err)
         }
     }
+    // async function handleSubmit(e) {
+    //     try {
+    //         e.preventDefault()
+    //         const form = e.currentTarget
+
+    //         if (form.checkValidity() === false) {
+    //             e.preventDefault()
+    //             e.stopPropagation()
+    //         }
+
+    //         // console.log(e)
+    //         setValidated(true)
+    //         const response = await fetch(`http://localhost:5000/auth`, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify(credentials)
+    //         })
+
+    //         const resData = await response.json()
+    //         console.log(`Current user is logging in... ${Object.keys(resData.user)}`)
+
+    //         if (response.status === 200) {
+    //             console.log('Setting current user and token...')
+    //             const logged = resData.user
+    //             // console.log(`Logged in: ${JSON.stringify(logged)}`)
+    //             // console.log(`Set Current User: ${Object.keys(logged)}`)
+    //             setCurrentUser(logged)
+    //             console.log(`Current User Logged In: ${Object.keys(currentUser)}`)
+    //             localStorage.setItem('token', resData.token)
+    //             // , {
+    //             //     path: '/'
+    //             // })
+    //             navigate('/recipes')
+    //         }
+    //         // console.log(currentUser)
+    //     } catch (err) {
+    //         console.log('Login Form Error: ' + err)
+    //     }
+    // }
 
     return (
         <Container className='my-5 mx-auto pb-5'>
@@ -115,7 +162,7 @@ function LoginForm() {
                     <Button variant='light' size='sm' onClick={() => navigate('/user/signup')}>
                         <BsEgg className='mb-1' /> Go to Sign Up Page
                     </Button>
-                    <Button variant='danger' size='sm' onClick={() => navigate('/')}>
+                    <Button variant='danger' size='sm' onClick={() => navigate('/home')}>
                         <BsEggFill className='mb-1' /> Cancel
                     </Button>
                     <Button variant='warning' size='sm' type='submit'>

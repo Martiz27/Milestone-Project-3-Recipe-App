@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Container, Form, FloatingLabel, Row, Col, Button, ButtonToolbar } from 'react-bootstrap'
 import { BsEgg, BsEggFill, BsEggFried } from 'react-icons/bs'
+// import Cookies from 'universal-cookie'
 
 function SignUpForm() {
 
@@ -16,26 +17,39 @@ function SignUpForm() {
     })
 
     const [validated, setValidated] = useState(false)
+    // const cookies = new Cookies()
 
     async function handleSubmit(e) {
-        e.preventDefault()
-        const form = e.currentTarget
-
-        if (form.checkValidity() === false) {
+        try {
             e.preventDefault()
-            e.stopPropagation()
+            const form = e.currentTarget
+
+            if (form.checkValidity() === false) {
+                e.preventDefault()
+                e.stopPropagation()
+            }
+
+            setValidated(true)
+            await fetch(`http://localhost:5000/user/signup`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user)
+            })
+            // const data = await response.json()
+
+            // if (response.status === 200) {
+            //     cookies.set('TOKEN', data.token, {
+            //         path: '/'
+            //     })
+            //     fetchCurrentUser()
+            // }
+
+            navigate('/auth/login')
+        } catch (err) {
+            console.log(`Sign Up Form Error: ${err}`)
         }
-        
-        setValidated(true)
-        await fetch(`http://localhost:5000/users/signup`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        })
-        
-        navigate('/')
     }
 
     return (
@@ -191,10 +205,10 @@ function SignUpForm() {
                     </Form.Text>
                 </Row>
                 <ButtonToolbar className='d-flex justify-content-end gap-3'>
-                    <Button variant='light' size='sm' onClick={() => navigate('/users/login')}>
+                    <Button variant='light' size='sm' onClick={() => navigate('/auth/login')}>
                         <BsEggFried className='mb-1' /> Go to Login Page
                     </Button>
-                    <Button variant='danger' size='sm' onClick={() => navigate('/')}>
+                    <Button variant='danger' size='sm' onClick={() => navigate('/home')}>
                         <BsEggFill className='mb-1' /> Cancel
                     </Button>
                     <Button variant='warning' size='sm' type='submit' >
