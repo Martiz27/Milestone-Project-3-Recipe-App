@@ -1,23 +1,21 @@
+import { CurrentUser } from './contexts/CurrentUser';
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Container, Navbar, Nav, Button, Form, InputGroup } from 'react-bootstrap'
 import { BsSearch, BsStarFill, BsPlus, BsEgg, BsEggFill } from 'react-icons/bs'
 // import Cookies from 'universal-cookie'
-import { CurrentUser } from './contexts/CurrentUser';
 
-// TODO: Make nav horizontally aligned and positioned on the bottom
+// Sticky Footer Navigation Component
 function StickyFooter() {
-
-    const navigate = useNavigate()
-
-    // const cookies = new Cookies()
-
-    // const token = cookies.get('token')
 
     const { currentUser, setCurrentUser } = useContext(CurrentUser)
 
-    console.log(`sticky before if: current user ${JSON.stringify(Object.keys(currentUser))}`)
+    const navigate = useNavigate()
+    // const cookies = new Cookies()
+    // const token = cookies.get('token')
 
+    // Function to handle logout
+    // Clear token, setCurrentUser to null, redirect to home page
     async function logout(e) {
         try {
             e.preventDefault()
@@ -31,16 +29,19 @@ function StickyFooter() {
             //     body: JSON.stringify(currentUser)
             // })
 
+            // Destroy token and setCurrentUser context to null
             console.log('Logging out... Destroying token...')
             // cookies.remove(token, { path: '/' })
             localStorage.clear()
             setCurrentUser(null)
-            navigate('/home')
         } catch (err) {
             console.log(`Logout Error: ${err}`)
         }
+        navigate('/home')
     }
 
+    // Set loginActions variable to return navbar if no user is logged in
+    // Home, Features, About available
     let loginActions = (
         <>
             <Navbar bg='light' fixed='bottom' fill='true'>
@@ -65,8 +66,13 @@ function StickyFooter() {
         </>
     )
 
+    // If currentUser is not empty return navbar if user is logged in
+    // Recipes, Search, Favorites, Add Recipe, Help, and Logout available
+    // TODO: Search Query Functionality
+    // TODO: Favorites Query Functionality
     if (Object.keys(currentUser).length) {
-        console.log(`sticky: current user ${JSON.stringify(Object.keys(currentUser))}`)
+        // Console.log current user
+        console.log(`Sticky Footer: Checking current user id... ${JSON.stringify(Object(currentUser))}`)
         loginActions = (
             <>
                 <Navbar collapseOnSelect expand='lg' bg='light' fixed='bottom' fill='true'>
@@ -113,6 +119,7 @@ function StickyFooter() {
         )
     }
 
+    // Return the loginActions navbar
     return (
         <>
             {loginActions}

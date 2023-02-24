@@ -7,14 +7,17 @@ import { BsPlus } from 'react-icons/bs'
 
 function NewRecipeForm() {
 
+    // currentUser context
     const { currentUser, setCurrentUser } = useContext(CurrentUser)
 
     const navigate = useNavigate()
 
     // const cookies = new Cookies()
 
+    // useState for user
     const [user, setUser] = useState(null)
 
+    // useState for initializing recipe
     const [recipe, setRecipe] = useState({
         "title": '',
         "category": [],
@@ -26,6 +29,9 @@ function NewRecipeForm() {
         "description": ''
     })
 
+    // TODO: Handle login auth to add user and recipe refs in collections
+    // Function to handle form submission
+    // POST changes then redirect to new recipe
     async function handleSubmit(e) {
         // console.log(e.target[4].value)
         // let tagArray = e.target[4].value.split(/\r?\n/)
@@ -33,6 +39,7 @@ function NewRecipeForm() {
         // setRecipe({ ...recipe, category: tagArray })
 
         e.preventDefault()
+
         const response = await fetch(`http://localhost:5000/recipes`, {
             method: 'POST',
             headers: {
@@ -43,7 +50,8 @@ function NewRecipeForm() {
         })
 
         const newRecipe = await response.json()
-
+        
+        // TODO: set references
         // setRecipe({
         //     ...recipe,
         //     author: [
@@ -71,6 +79,8 @@ function NewRecipeForm() {
                 <Form.Label>
                     Recipe Information
                 </Form.Label>
+
+                {/* Recipe Title Field */}
                 <Row className='mb-3'>
                     <Form.Group>
                         <FloatingLabel
@@ -89,6 +99,7 @@ function NewRecipeForm() {
                     </Form.Group>
                 </Row>
 
+                {/*  Recipe Description Field */}
                 <Row className='mb-3'>
                     <Form.Group>
                         <FloatingLabel
@@ -107,6 +118,7 @@ function NewRecipeForm() {
                     </Form.Group>
                 </Row>
 
+                {/* Recipe Image Field */}
                 <Row className='mb-3 g-3'>
                     <Col md={12} lg={6}>
                         <Form.Group>
@@ -125,6 +137,7 @@ function NewRecipeForm() {
                         </Form.Group>
                     </Col>
 
+                    {/* Recipe Source Field */}
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
@@ -145,6 +158,7 @@ function NewRecipeForm() {
 
                 <hr />
 
+                {/* Category Array Field */}
                 <Form.Group >
                     <Form.Label>
                         Categories
@@ -165,6 +179,7 @@ function NewRecipeForm() {
 
                 <hr />
 
+                {/* Ingredients String Field */}
                 <Form.Group className='mb-4'>
                     <Form.Label>Ingredients</Form.Label>
                     <Row>
@@ -184,6 +199,7 @@ function NewRecipeForm() {
 
                 <hr />
 
+                {/* Directions String Field */}
                 <Form.Group className='mb-3'>
                     <Form.Label>Directions</Form.Label>
                     <Row>
@@ -201,6 +217,7 @@ function NewRecipeForm() {
                     />
                 </Form.Group>
 
+                {/* New Recipe Submit Button */}
                 <Form.Group as={Row}>
                     <Col className='text-center'>
                         <Button type="submit"><BsPlus className='mb-1' /> Add Recipe</Button>

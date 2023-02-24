@@ -1,8 +1,9 @@
+import errorImg from './images/error404.jpg'
 import { useNavigate } from 'react-router'
 import { Container, Card, Row, Button } from 'react-bootstrap'
-import errorImg from './images/error404.jpg'
 import { BsArrowLeftShort } from 'react-icons/bs';
 
+// Error 404 Page
 function Error404() {
     const navigate = useNavigate()
 
@@ -16,6 +17,8 @@ function Error404() {
                         <Card.Text>
                             <h3>Oops! Looks like the page you were looking for was removed or is temporary not available</h3>
                         </Card.Text>
+
+                        {/* Navigate to previous page */}
                         <Row className='mb-3 position-absolute bottom-0'>
                             <Button variant='light' size='sm' onClick={() => navigate(-1)}><BsArrowLeftShort /> Go Back </Button>
                         </Row>

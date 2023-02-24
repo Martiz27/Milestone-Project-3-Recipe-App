@@ -4,10 +4,12 @@ import { Container, Form, FloatingLabel, Row, Col, Button, ButtonToolbar } from 
 import { BsEgg, BsEggFill, BsEggFried } from 'react-icons/bs'
 // import Cookies from 'universal-cookie'
 
+// Sign Up Form Page
 function SignUpForm() {
 
     const navigate = useNavigate()
 
+    // useState for initializing user
     const [user, setUser] = useState({
         username: '',
         firstName: '',
@@ -16,20 +18,29 @@ function SignUpForm() {
         password: ''
     })
 
+    // useState for form validation
     const [validated, setValidated] = useState(false)
+    
     // const cookies = new Cookies()
 
+    // Function to handle form submission
+    // Checks validity of form and if the response status is OK then create a user and redirect to login page
     async function handleSubmit(e) {
         try {
             e.preventDefault()
+
             const form = e.currentTarget
 
+            // Stop form submission if form is invalid
             if (form.checkValidity() === false) {
                 e.preventDefault()
                 e.stopPropagation()
             }
 
+            // Set form validation to true
             setValidated(true)
+
+            // Create user from form data
             await fetch(`http://localhost:5000/user/signup`, {
                 method: 'POST',
                 headers: {
@@ -37,16 +48,9 @@ function SignUpForm() {
                 },
                 body: JSON.stringify(user)
             })
-            // const data = await response.json()
-
-            // if (response.status === 200) {
-            //     cookies.set('TOKEN', data.token, {
-            //         path: '/'
-            //     })
-            //     fetchCurrentUser()
-            // }
 
             navigate('/auth/login')
+
         } catch (err) {
             console.log(`Sign Up Form Error: ${err}`)
         }
@@ -57,12 +61,16 @@ function SignUpForm() {
             <h1 className='text-warning'>Sign Up</h1>
             <hr />
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
+
+                {/* Personal Information Section */}
                 <Form.Label>
                     <h3 className='text-primary'>
                         Personal Information
                     </h3>
                 </Form.Label>
                 <Row className='mb-3 g-3'>
+
+                    {/* First Name Field */}
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
@@ -84,6 +92,8 @@ function SignUpForm() {
                             </FloatingLabel>
                         </Form.Group>
                     </Col>
+
+                    {/* Last Name Field */}
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
@@ -105,6 +115,8 @@ function SignUpForm() {
                             </FloatingLabel>
                         </Form.Group>
                     </Col>
+
+                    {/* Email Field */}
                     <Form.Group>
                         <FloatingLabel
                             id='floatingEmail'
@@ -127,13 +139,16 @@ function SignUpForm() {
                     </Form.Group>
                 </Row>
                 <hr />
-                {/* TODO: MATCHING PASSWORD INPUT CONFIRMATION */}
+
+                {/* Credentials Input Section */}
                 <Form.Label>
                     <h3 className='text-primary'>
                         Login Information
                     </h3>
                 </Form.Label>
                 <Row className='mb-3 g-3'>
+
+                    {/* Username Field */}
                     <Form.Group>
                         <FloatingLabel
                             id='floatingUsername'
@@ -157,6 +172,8 @@ function SignUpForm() {
                             </Form.Control.Feedback>
                         </FloatingLabel>
                     </Form.Group>
+
+                    {/* Password Field */}
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
@@ -179,6 +196,8 @@ function SignUpForm() {
                             </FloatingLabel>
                         </Form.Group>
                     </Col>
+
+                    {/* Match Password Field */}
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
@@ -204,6 +223,8 @@ function SignUpForm() {
                         Your password must be a minimum of 6 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji
                     </Form.Text>
                 </Row>
+
+                {/* Navigate to Login Page, Home Page, or Submit Sign Up Form */}
                 <ButtonToolbar className='d-flex justify-content-end gap-3'>
                     <Button variant='light' size='sm' onClick={() => navigate('/auth/login')}>
                         <BsEggFried className='mb-1' /> Go to Login Page

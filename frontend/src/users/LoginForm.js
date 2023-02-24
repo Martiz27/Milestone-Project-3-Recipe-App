@@ -1,38 +1,49 @@
 import { CurrentUser } from '../contexts/CurrentUser'
-import { useNavigate } from 'react-router-dom'
 import { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Container, Form, FloatingLabel, Row, Col, Button, ButtonToolbar } from 'react-bootstrap'
 import { BsEgg, BsEggFill, BsEggFried } from 'react-icons/bs'
-import Cookies from 'universal-cookie'
+// import Cookies from 'universal-cookie'
 
+// Login Form Page
 function LoginForm() {
 
+    // currentUser context
     const { currentUser, setCurrentUser } = useContext(CurrentUser)
 
     const navigate = useNavigate()
 
-    const cookies = new Cookies()
+    // const cookies = new Cookies()
 
+    // useState for authenticating user credential inputs
     const [credentials, setCredentials] = useState({
         username: '',
         password: ''
     })
 
+    // useState for form validation
     const [validated, setValidated] = useState(false)
 
-    const [errorMessage, setErrorMessage] = useState(null)
+    // const [errorMessage, setErrorMessage] = useState(null)
+
+    // Function to handle form submission
+    // Checks validity of form and if the response status is OK then setCurrentUser context and token, redirect to recipes index page
     async function handleSubmit(e) {
         try {
             e.preventDefault()
+
             const form = e.currentTarget
 
+            // Stop form submission if form is invalid
             if (form.checkValidity() === false) {
                 e.preventDefault()
                 e.stopPropagation()
             }
 
-            // console.log(e)
+            // Set form validation to true
             setValidated(true)
+
+            // Authenticate user credentials
             const response = await fetch(`http://localhost:5000/auth`, {
                 method: 'POST',
                 headers: {
@@ -42,67 +53,23 @@ function LoginForm() {
             })
 
             const resData = await response.json()
-            console.log(`Current user is logging in... ${Object.keys(resData.user)}`)
 
+            // Console log user signing in
+            console.log(`Current user is logging in... ${JSON.stringify(Object(resData.user.username))}`)
+
+            // If response is OK setCurrentUser context and token using response jwt token
             if (response.status === 200) {
-                console.log('Setting current user and token...')
-                const logged = resData.user
-                // console.log(`Logged in: ${JSON.stringify(logged)}`)
-                // console.log(`Set Current User: ${Object.keys(logged)}`)
+                console.log('Setting current user and token... Redirecting to recipes index...')
+                const logged = (resData.user._id)
                 setCurrentUser(logged)
-                console.log(`Current User Logged In: ${Object.keys(currentUser)}`)
                 localStorage.setItem('token', resData.token)
-                // , {
-                //     path: '/'
-                // })
                 navigate('/recipes')
             }
-            // console.log(currentUser)
+
         } catch (err) {
             console.log('Login Form Error: ' + err)
         }
     }
-    // async function handleSubmit(e) {
-    //     try {
-    //         e.preventDefault()
-    //         const form = e.currentTarget
-
-    //         if (form.checkValidity() === false) {
-    //             e.preventDefault()
-    //             e.stopPropagation()
-    //         }
-
-    //         // console.log(e)
-    //         setValidated(true)
-    //         const response = await fetch(`http://localhost:5000/auth`, {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify(credentials)
-    //         })
-
-    //         const resData = await response.json()
-    //         console.log(`Current user is logging in... ${Object.keys(resData.user)}`)
-
-    //         if (response.status === 200) {
-    //             console.log('Setting current user and token...')
-    //             const logged = resData.user
-    //             // console.log(`Logged in: ${JSON.stringify(logged)}`)
-    //             // console.log(`Set Current User: ${Object.keys(logged)}`)
-    //             setCurrentUser(logged)
-    //             console.log(`Current User Logged In: ${Object.keys(currentUser)}`)
-    //             localStorage.setItem('token', resData.token)
-    //             // , {
-    //             //     path: '/'
-    //             // })
-    //             navigate('/recipes')
-    //         }
-    //         // console.log(currentUser)
-    //     } catch (err) {
-    //         console.log('Login Form Error: ' + err)
-    //     }
-    // }
 
     return (
         <Container className='my-5 mx-auto pb-5'>
@@ -113,6 +80,8 @@ function LoginForm() {
                     <h3 className='text-primary'>Enter Username and Password</h3>
                 </Form.Label>
                 <Row className='mb-3 g-3'>
+
+                    {/* Username Field */}
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
@@ -135,6 +104,8 @@ function LoginForm() {
                             </FloatingLabel>
                         </Form.Group>
                     </Col>
+
+                    {/* Password Field */}
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
@@ -158,6 +129,8 @@ function LoginForm() {
                         </Form.Group>
                     </Col>
                 </Row>
+
+                {/* Navigate to Sign Up Page, Home Page, or Submit Login Form */}
                 <ButtonToolbar className='d-flex justify-content-end gap-3'>
                     <Button variant='light' size='sm' onClick={() => navigate('/user/signup')}>
                         <BsEgg className='mb-1' /> Go to Sign Up Page

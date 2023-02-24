@@ -1,23 +1,30 @@
+import { CurrentUser } from '../contexts/CurrentUser';
 import { useState, useEffect, useContext } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Container, Form, FloatingLabel, Row, Col, Button } from 'react-bootstrap';
 import { BsCheck } from 'react-icons/bs'
-import { CurrentUser } from '../contexts/CurrentUser';
 
+// Edit Recipe Page
 function EditRecipeForm() {
+
+    // currentUser context
+    const { currentUser, setCurrentUser } = useContext(CurrentUser)
 
     const navigate = useNavigate()
 
+    // useParams to access recipeId
     const { recipeId } = useParams()
 
+    // useState for recipe
     const [recipe, setRecipe] = useState(null)
 
-    const { currentUser, setCurrentUser } = useContext(CurrentUser)
-
+    // useEffect to fetch recipe data
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch(`http://localhost:5000/recipes/${recipeId}`)
             const resData = await response.json()
+
+            // if response status is OK then setRecipe
             if (response.ok) {
                 setRecipe(resData)
             }
@@ -25,8 +32,11 @@ function EditRecipeForm() {
         fetchData()
     }, [recipeId])
 
+    // Function to handle form submission
+    // PUT changes then redirect to updated recipe page
     async function handleSubmit(e) {
         e.preventDefault()
+
         await fetch(`http://localhost:5000/recipes/${recipe._id}`, {
             method: 'PUT',
             headers: {
@@ -34,25 +44,31 @@ function EditRecipeForm() {
             },
             body: JSON.stringify(recipe)
         })
+
         navigate(`/recipes/${recipe._id}`)
     }
 
-    // TODO: Update Loading, Add Loading Component?
+    // TODO: Update Loading, Add Loading Component
     if (recipe === null) {
         return <h1>Loading</h1>
     }
 
+    // Set int of recipe ingredients and directions array and use for textarea to show user as many items in their fields
     let ingredientLen = recipe.ingredients.split(/\r?\n/).length
     let directionLen = recipe.directions.split(/\r?\n/).length
 
     return (
         <Container className='my-4 mx-auto pb-5'>
+
+            {/* Display recipe title */}
             <h1>Update <span className='text-primary'>{recipe.title}</span></h1>
             <hr />
             <Form onSubmit={handleSubmit}>
                 <Form.Label>
                     Recipe Information
                 </Form.Label>
+
+                {/* Recipe Title Field */}
                 <Row className='mb-3'>
                     <Form.Group>
                         <FloatingLabel
@@ -71,6 +87,7 @@ function EditRecipeForm() {
                     </Form.Group>
                 </Row>
 
+                {/*  Recipe Description Field */}
                 <Row className='mb-3'>
                     <Form.Group>
                         <FloatingLabel
@@ -89,6 +106,7 @@ function EditRecipeForm() {
                     </Form.Group>
                 </Row>
 
+                {/* Recipe Image Field */}
                 <Row className='mb-3 g-3'>
                     <Col md={12} lg={6}>
                         <Form.Group>
@@ -107,6 +125,7 @@ function EditRecipeForm() {
                         </Form.Group>
                     </Col>
 
+                    {/* Recipe Source Field */}
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
@@ -127,6 +146,8 @@ function EditRecipeForm() {
 
                 <hr />
 
+                {/* Category Array Field */}
+                {/* Use defaultValue rather than value to prevent array from splitting early */}
                 <Form.Group >
                     <Form.Label>
                         Categories
@@ -149,6 +170,7 @@ function EditRecipeForm() {
 
                 <hr />
 
+                {/* Ingredients String Field */}
                 <Form.Group className='mb-4'>
                     <Form.Label>Ingredients</Form.Label>
                     <Row>
@@ -169,6 +191,7 @@ function EditRecipeForm() {
 
                 <hr />
 
+                {/* Directions String Field */}
                 <Form.Group className='mb-3'>
                     <Form.Label>Directions</Form.Label>
                     <Row>
@@ -187,6 +210,7 @@ function EditRecipeForm() {
                     />
                 </Form.Group>
 
+                {/* Update Recipe Submit Button */}
                 <Form.Group as={Row}>
                     <Col className='text-center'>
                         <Button type="submit">
