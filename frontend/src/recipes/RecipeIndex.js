@@ -1,13 +1,13 @@
-// currentuser context after login or sign up
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router'
-import { Container, Row, Col, Card, Button} from 'react-bootstrap'
-import { BsArrowRightShort } from 'react-icons/bs'
 import Masonry from 'react-masonry-css'
+import { CurrentUser } from '../contexts/CurrentUser';
+import { useState, useEffect, useContext } from 'react'
+import { useNavigate } from 'react-router'
+import { Container, Row, Col, Card, Button, OverlayTrigger, Popover } from 'react-bootstrap'
+import { BsArrowRightShort, BsStarFill } from 'react-icons/bs'
 
 function RecipeIndex(data) {
 
-    // Bootstrap Breakpoints:
+    // Bootstrap Breakpoints Reference:
     // xxl: 1400
     // xl: 1200
     // lg: 992
@@ -15,7 +15,7 @@ function RecipeIndex(data) {
     // sm: 576
     // xs: <576
 
-    // Masonry Breakpoints
+    // Masonry-CSS Breakpoints
     const masonryBreakpoint = {
         default: 4,
         1400: 3,
@@ -23,11 +23,16 @@ function RecipeIndex(data) {
         770: 1,
     }
 
+    // useContext for currentUser
+    const { currentUser, setCurrentUser } = useContext(CurrentUser)
+
     const navigate = useNavigate()
 
+    // useState for recipe
     const [recipes, setRecipes] = useState([])
 
-    // ${process.env.REACT_APP_SERVER_URL}
+
+    // useEffect for fetching recipe collection data
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch(`http://localhost:5000/recipes`)
@@ -37,49 +42,78 @@ function RecipeIndex(data) {
         fetchData()
     }, [])
 
+    // Map recipes to cards with popovers
     let recipesFormatted = recipes.map((recipe, index) => {
+
+        // Set popover with additional tags, triggered on hover and focus
+        const popover = <Popover id={index}>
+            <Popover.Header as='h3' className='text-primary'>
+                {recipe.title} <span className='text-danger'>Tags</span>
+            </Popover.Header>
+            <Popover.Body style={{ "minHeight": "10px", "minWidth": "100px" }} className='fst-italic'>
+                {recipe.category.slice(1).map((tag, index) => {
+                    return <Col key={index}># {tag}</Col>
+                })}
+            </Popover.Body>
+        </Popover>
+
         return (
             <Card key={index} style={{ width: '300px' }}>
-                <Card.Img src={recipe.image} className='img-fluid rounded-0' />
+
+                {/* Recipe Image */}
+                <Card.Img src={recipe.image} className='img-fluid rounded-2' />
                 <Card.ImgOverlay className='bg-dark bg-opacity-75 text-light '>
+
+                    {/* Recipe Title */}
                     <Card.Title><h3>{recipe.title}</h3></Card.Title>
-                    <Card.Body>
-                        <Row className='fst-italic fw-bold'>
-                            {
-                                recipe.breakfast
-                                    ? <Col key='breakfast'> #breakfast</Col>
-                                    : ' '
-                            }
-                            {
-                                recipe.lunch
-                                    ? <Col key='lunch'> #lunch</Col>
-                                    : ' '
-                            }
-                            {
-                                recipe.dinner
-                                    ? <Col key='dinner'> #dinner</Col>
-                                    : ' '
-                            }
-                            {
-                                recipe.dessert
-                                    ? <Col key='dessert'> #dessert</Col>
-                                    : ' '
-                            }
-                        </Row>
-                    </Card.Body>
-                    <Row className='ms-1 mb-3 position-absolute bottom-0'>
-                        <Button variant='light' size='sm' onClick={() => navigate(`/recipes/${recipe._id}`)}>Open Recipe <BsArrowRightShort /></Button>
+
+                    {/* If recipe category has multiple items add popover */}
+                    {/* Else display category on tag */}
+                    <Row className='fst-italic'>
+                        {
+                            recipe.category.length >= 2
+                                ? <Col>#{recipe.category[0]} <OverlayTrigger trigger={['hover', 'focus']} placement='right' overlay={popover}><span className='text-warning fw-normal text-decoration-underline'> more tags</span></OverlayTrigger></Col>
+                                :
+                                recipe.category.map((tag, index) => {
+                                    return <Col key={index}># {tag}</Col>
+                                })
+                        }
+                    </Row>
+                    <Row className='ms-0.5 mb-3 position-absolute bottom-0 w-100'>
+                        <Col className='me-4'>
+
+                            {/* Navigate to CurrentRecipe component (show recipe) */}
+                            <Button variant='light' size='sm' onClick={() => navigate(`/recipes/${recipe._id}`)}>
+                                Open Recipe <BsArrowRightShort />
+                            </Button>
+                        </Col>
+
+                        {/* TODO: Add Remove from and add to favorites small button */}
+                        {/* If recipe is in favorites (favorite is true) display a favorites button */}
+                        {
+                            recipe.favorite
+                                ? <Col>
+                                    <Button variant='danger' size='sm'>
+                                        <BsStarFill className='mb-1' /> In Favorites
+                                    </Button>
+                                </Col>
+                                : <span></span>
+                        }
                     </Row>
                 </Card.ImgOverlay>
-            </Card >
+            </Card>
         )
     })
 
     return (
         <Container className='my-5 mx-auto pb-5'>
+
+            {/* Pass Masonry-CSS breakpoints */}
             <Masonry breakpointCols={masonryBreakpoint}
                 className="masonry-grid"
                 columnClassName="masonry-grid_column">
+
+                {/* Pass recipes map */}
                 {recipesFormatted}
             </Masonry>
         </Container>

@@ -1,18 +1,26 @@
-import { useState, useEffect } from 'react'
+import { CurrentUser } from '../contexts/CurrentUser';
+import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Container, Form, FloatingLabel, Row, Col, Button } from 'react-bootstrap';
 import { BsPlus } from 'react-icons/bs'
+// import Cookies from 'universal-cookie'
 
 function NewRecipeForm() {
 
+    // currentUser context
+    const { currentUser, setCurrentUser } = useContext(CurrentUser)
+
     const navigate = useNavigate()
 
+    // const cookies = new Cookies()
+
+    // useState for user
+    const [user, setUser] = useState(null)
+
+    // useState for initializing recipe
     const [recipe, setRecipe] = useState({
         "title": '',
-        "breakfast": null,
-        "lunch": null,
-        "dinner": null,
-        "dessert": null,
+        "category": [],
         "favorite": false,
         "ingredients": '',
         "directions": '',
@@ -21,16 +29,46 @@ function NewRecipeForm() {
         "description": ''
     })
 
+    // TODO: Handle login auth to add user and recipe refs in collections
+    // Function to handle form submission
+    // POST changes then redirect to new recipe
     async function handleSubmit(e) {
+        // console.log(e.target[4].value)
+        // let tagArray = e.target[4].value.split(/\r?\n/)
+        // console.log(tagArray)
+        // setRecipe({ ...recipe, category: tagArray })
+
         e.preventDefault()
-        await fetch(`http://localhost:5000/recipes`, {
+
+        const response = await fetch(`http://localhost:5000/recipes`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify(recipe)
         })
-        navigate('/recipes')
+
+        const newRecipe = await response.json()
+        
+        // TODO: set references
+        // setRecipe({
+        //     ...recipe,
+        //     author: [
+        //         ...recipe.author,
+        //         currentUser._id
+        //     ]
+        // })
+
+        // setUser({
+        //     ...user,
+        //     recipeList: [
+        //         ...user.recipeList,
+        //         recipe._id
+        //     ]
+        // })
+
+        navigate(`/recipes/${newRecipe._id}`)
     }
 
     return (
@@ -41,6 +79,8 @@ function NewRecipeForm() {
                 <Form.Label>
                     Recipe Information
                 </Form.Label>
+
+                {/* Recipe Title Field */}
                 <Row className='mb-3'>
                     <Form.Group>
                         <FloatingLabel
@@ -59,6 +99,7 @@ function NewRecipeForm() {
                     </Form.Group>
                 </Row>
 
+                {/*  Recipe Description Field */}
                 <Row className='mb-3'>
                     <Form.Group>
                         <FloatingLabel
@@ -77,6 +118,7 @@ function NewRecipeForm() {
                     </Form.Group>
                 </Row>
 
+                {/* Recipe Image Field */}
                 <Row className='mb-3 g-3'>
                     <Col md={12} lg={6}>
                         <Form.Group>
@@ -95,6 +137,7 @@ function NewRecipeForm() {
                         </Form.Group>
                     </Col>
 
+                    {/* Recipe Source Field */}
                     <Col md={12} lg={6}>
                         <Form.Group>
                             <FloatingLabel
@@ -115,50 +158,28 @@ function NewRecipeForm() {
 
                 <hr />
 
-                <Row className='mb-4'>
+                {/* Category Array Field */}
+                <Form.Group >
                     <Form.Label>
                         Categories
                     </Form.Label>
-                    <Form.Group as={Col} id="BreakfastCheck">
-                        <Form.Check
-                            type="checkbox"
-                            label="Breakfast"
-                            id='breakfast'
-                            name='breakfast'
-                            onChange={e => setRecipe({ ...recipe, breakfast: e.target.checked })}
-                        />
-                    </Form.Group>
-                    <Form.Group as={Col} id="LunchCheck">
-                        <Form.Check
-                            type="checkbox"
-                            label="Lunch"
-                            id='lunch'
-                            name='lunch'
-                            onChange={e => setRecipe({ ...recipe, lunch: e.target.checked })}
-                        />
-                    </Form.Group>
-                    <Form.Group as={Col} id="DinnerCheck">
-                        <Form.Check
-                            type="checkbox"
-                            label="Dinner"
-                            id='dinner'
-                            name='dinner'
-                            onChange={e => setRecipe({ ...recipe, dinner: e.target.checked })}
-                        />
-                    </Form.Group>
-                    <Form.Group as={Col} id="DessertCheck">
-                        <Form.Check
-                            type="checkbox"
-                            label="Dessert"
-                            id='dessert'
-                            name='dessert'
-                            onChange={e => setRecipe({ ...recipe, dessert: e.target.checked })}
-                        />
-                    </Form.Group>
-                </Row>
+                    <Row>
+                        <Form.Text>
+                            Separate categories by writing them on a new line.
+                        </Form.Text>
+                    </Row>
+                    <Form.Control
+                        as="textarea"
+                        className='mt-2 lh-lg'
+                        id='tags'
+                        name='tags'
+                        onChange={e => setRecipe({ ...recipe, category: e.target.value.split(/\r?\n/) })}
+                    />
+                </Form.Group>
 
                 <hr />
 
+                {/* Ingredients String Field */}
                 <Form.Group className='mb-4'>
                     <Form.Label>Ingredients</Form.Label>
                     <Row>
@@ -178,6 +199,7 @@ function NewRecipeForm() {
 
                 <hr />
 
+                {/* Directions String Field */}
                 <Form.Group className='mb-3'>
                     <Form.Label>Directions</Form.Label>
                     <Row>
@@ -195,6 +217,7 @@ function NewRecipeForm() {
                     />
                 </Form.Group>
 
+                {/* New Recipe Submit Button */}
                 <Form.Group as={Row}>
                     <Col className='text-center'>
                         <Button type="submit"><BsPlus className='mb-1' /> Add Recipe</Button>
