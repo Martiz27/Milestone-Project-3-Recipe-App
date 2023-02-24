@@ -10,11 +10,13 @@ function StickyFooter() {
 
     const navigate = useNavigate()
 
-    const cookies = new Cookies()
+    // const cookies = new Cookies()
 
     // const token = cookies.get('token')
 
     const { currentUser, setCurrentUser } = useContext(CurrentUser)
+
+    console.log(`sticky before if: current user ${JSON.stringify(Object.keys(currentUser))}`)
 
     async function logout(e) {
         try {
@@ -63,8 +65,8 @@ function StickyFooter() {
         </>
     )
 
-
-    if (currentUser) {
+    if (Object.keys(currentUser).length) {
+        console.log(`sticky: current user ${JSON.stringify(Object.keys(currentUser))}`)
         loginActions = (
             <>
                 <Navbar collapseOnSelect expand='lg' bg='light' fixed='bottom' fill='true'>
