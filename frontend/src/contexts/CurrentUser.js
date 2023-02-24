@@ -10,7 +10,7 @@ function CurrentUserProvider(props) {
     // const cookies = new Cookies()
 
     // useState for current user
-    const [currentUser, setCurrentUser] = useState({})
+    const [currentUser, setCurrentUser] = useState(null)
 
     // useEffect to check if a user is logged in with a token
     useEffect(() => {
