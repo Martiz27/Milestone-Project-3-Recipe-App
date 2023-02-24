@@ -46,16 +46,19 @@ Our inspiration for the app comes from our love of food and cooking.
 
 | Method | Path                      | Purpose                   | Redirect Path*                  |
 | ------ | ------------------------- | ------------------------- | ------------------------------- |
-| GET    | `/`                       | Welcome Page              | `/user/signup` or `/auth/login` |
+|        | `/home`                   | Welcome Page              | `/user/signup` or `/auth/login` |
+|        | `/info/about`             | About Page                |                                 |
+|        | `info/features`           | Features Page             |                                 |
 | POST   | `/user/signup`            | User Signup Page          | `/recipes`                      |
 | POST   | `/auth/login`             | User Login Page           | `/recipes`                      |
 | GET    | `/recipes/`               | Recipes Index Page        |                                 |
+|        | `/recipes/info/help`      | Help Page for Using App   |                                 |
 | POST   | `/recipes/new`            | New Recipe Form           | `/recipes/:recipeId`            |
 | GET    | `/recipes/:recipeId`      | View Recipe               |                                 |
 | PUT    | `/recipes/:recipeId/edit` | Edit Recipe Form          | `/recipes/:recipeId`            |
 | DELETE | `/recipes/:recipeId`      | Delete Recipe             | `/recipes`                      |
 | GET    | `/recipes/?categoryId`    | Filter by Recipe Category |                                 |
-| GET    | `*`                       | 404 Page                  |                                 |
+| GET    | `*`                       | 404 Page                  | `previous page`                 |
 
 ### Recipes
 
@@ -90,7 +93,12 @@ Our inspiration for the app comes from our love of food and cooking.
 
 - - -
 ### Pitfalls
-Notes about bugs and unfinished functionality
+
+CurrentUser Context and Provider issues resulting in breaking of useState to keep a user essentially logged in
+
+Issues with reference documents to create a relationship between collections
+
+Minor feature issues such as querying categories or favorites
 
 - - -
 ### Collaborators
@@ -116,3 +124,9 @@ FreeCodeCamp  [How to Build an Authentication System](https://www.freecodecamp.o
 Joshua Ellis [User Model Boilerplate](https://gist.github.com/jzellis/41038ac461433b32174a8c556f5aff76)
 
 Thinkster [Creating the User Model](https://thinkster.io/tutorials/node-json-api/creating-the-user-model)
+
+- - - 
+
+### Roadmap
+
+[Trello Roadmap](https://trello.com/b/vo36wsaC/milestone-3-recipes-app)
