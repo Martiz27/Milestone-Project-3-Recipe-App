@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Container, Form, FloatingLabel, Row, Col, Button } from 'react-bootstrap';
 import { BsCheck } from 'react-icons/bs'
+import { CurrentUser } from '../contexts/CurrentUser';
 
 function EditRecipeForm() {
 
@@ -10,6 +11,8 @@ function EditRecipeForm() {
     const { recipeId } = useParams()
 
     const [recipe, setRecipe] = useState(null)
+
+    const { currentUser, setCurrentUser } = useContext(CurrentUser)
 
     useEffect(() => {
         const fetchData = async () => {

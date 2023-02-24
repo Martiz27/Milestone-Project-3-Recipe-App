@@ -1,8 +1,9 @@
 // currentuser context after login or sign up
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Container, Row, Col, Card, Button, ButtonGroup, ButtonToolbar, ToggleButton } from 'react-bootstrap'
 import { BsPencilSquare, BsTrashFill, BsStarFill, BsStar } from 'react-icons/bs'
+import { CurrentUser } from '../contexts/CurrentUser';
 
 function CurrentRecipe() {
 
@@ -13,6 +14,9 @@ function CurrentRecipe() {
     const [recipe, setRecipe] = useState(null)
 
     const [fav, setFav] = useState()
+
+    const { currentUser, setCurrentUser } = useContext(CurrentUser)
+
 
     useEffect(() => {
         const fetchData = async () => {

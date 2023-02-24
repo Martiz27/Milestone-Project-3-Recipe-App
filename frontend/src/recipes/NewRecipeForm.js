@@ -52,13 +52,13 @@ function NewRecipeForm() {
         //     ]
         // })
 
-        setUser({
-            ...user,
-            recipeList: [
-                ...user.recipeList,
-                recipe._id
-            ]
-        })
+        // setUser({
+        //     ...user,
+        //     recipeList: [
+        //         ...user.recipeList,
+        //         recipe._id
+        //     ]
+        // })
 
         navigate(`/recipes/${newRecipe._id}`)
     }

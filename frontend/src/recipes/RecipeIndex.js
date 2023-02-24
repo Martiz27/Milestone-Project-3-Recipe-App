@@ -1,9 +1,10 @@
 // currentuser context after login or sign up
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router'
 import { Container, Row, Col, Card, Button, OverlayTrigger, Popover } from 'react-bootstrap'
 import { BsArrowRightShort, BsStarFill } from 'react-icons/bs'
 import Masonry from 'react-masonry-css'
+import { CurrentUser } from '../contexts/CurrentUser';
 
 function RecipeIndex(data) {
 
@@ -26,6 +27,8 @@ function RecipeIndex(data) {
     const navigate = useNavigate()
 
     const [recipes, setRecipes] = useState([])
+    const { currentUser, setCurrentUser } = useContext(CurrentUser)
+
 
     // ${process.env.REACT_APP_SERVER_URL}
     useEffect(() => {
