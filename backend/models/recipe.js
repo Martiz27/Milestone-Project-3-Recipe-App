@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose;
 
 const recipeSchema = Schema({
+
+    // Reference the User model of type Object ids
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'
@@ -10,6 +12,9 @@ const recipeSchema = Schema({
         type: String,
         required: true
     },
+
+    // TODO: Update frontend forms to check for unique items before handling submission
+    // Category has 20 max items that must be unique
     category: {
         type: Array,
         items: {
@@ -42,6 +47,8 @@ const recipeSchema = Schema({
         type: String,
         required: true
     }
+
+    // Create timestamps
 }, { timestamps: true })
 
 const Recipe = mongoose.model('Recipe', recipeSchema)

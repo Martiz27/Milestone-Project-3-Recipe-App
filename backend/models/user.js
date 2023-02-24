@@ -1,10 +1,17 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose;
+
+// Import for unique validation and hashing
 const uniqueValidator = require('mongoose-unique-validator')
 const bcrypt = require('bcrypt')
 const SALT_WORK_FACTOR = 10;
 
+// Typical email regex for browsers (reference)
+// ^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+
 const userSchema = Schema({
+
+    // Username must be unique, between 6 and 32 characters, and match a combination of letters and digits
     username: {
         type: String,
         lowercase: true,
@@ -23,26 +30,34 @@ const userSchema = Schema({
         type: String,
         required: [true, "Can't be blank"]
     },
+
+    // TODO: Update email regex with more robust pattern
+    // Email must be between 6 and 127 characters and match a the regex of an email
     email: {
         type: String,
         lowercase: true,
         required: [true, "Can't be blank"],
         match: [/\S+@\S+\.\S+/, 'is invalid'],
-        //^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/ Browser regex
         minLength: 6,
         maxLength: 127,
         index: true
     },
+
+    // Password must be between 6 and 127 characters
     password: {
         type: String,
         required: true,
         minLength: 6,
         maxLength: 127,
     },
+
+    // Reference the Recipe model in type Array of Object ids
     recipeList: [{
         type: Schema.Types.ObjectId,
         ref: 'Recipe'
     }]
+
+    // Create timestamps
 }, { timestamps: true })
 
 // unique validator for username
@@ -56,11 +71,6 @@ userSchema.pre("save", function (next) {
     this.password = bcrypt.hashSync(this.password, SALT_WORK_FACTOR);
     next();
 })
-
-// // compare password
-// userSchema.methods.comparePassword = function (plaintext, callback) {
-//     return callback(null, bcrypt.compareSync(plaintext, this.password));
-// }
 
 const User = mongoose.model('User', userSchema)
 

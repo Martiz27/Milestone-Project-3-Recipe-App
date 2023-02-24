@@ -1,12 +1,16 @@
 // Modules and Globals
 require('dotenv').config()
+
 const express = require("express")
+const app = express()
+
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const app = express()
 const authUser = require('./authorization/defineUser')
+
 const mongoose = require('mongoose')
 mongoose.set('strictQuery', true);
+
 const PORT = process.env.PORT
 
 // Express Settings

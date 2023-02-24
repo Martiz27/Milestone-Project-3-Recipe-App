@@ -4,35 +4,37 @@ const jwt = require('jsonwebtoken')
 
 const { User } = db
 
+// Function to handle defining currentUser in CurrentUser context provider
 async function defineCurrentUser(req, res, next) {
     try {
-        console.log(`headers: ${req.json()}`)
+        console.log(`Defining User... Headers: ${req.json()}`)
         const [method, token] = await req.headers.authorization.split(" ")
-        console.log(`Method: ${method}, Token: ${token}`)
+
+        console.log(`Defining User... Method: ${method}, Token: ${token}`)
+
+        // If header method is Bearer verify token and find user from token
+        // Send the user to context provider
         if (method == 'Bearer') {
             const decodedToken = await jwt.verify( token, 'RANDOM-TOKEN')
             const { id } = decodedToken.value
             let user = await User.findOne({ userId: id })
             req.currentUser = user
-            console.log(`check define user: ${user}`)
-            console.log(`defining user: ${req.currentUser}`)
+            console.log(`Defining user... check: ${user}`)
+            console.log(`Defining user... request sent: ${req.currentUser}`)
         }
         next()
 
     } catch (err) {
-        // TODO: FIX STATUS ERROR
+        // TODO: FIX UNAUTHORIZED STATUS ERROR
         // res.status(401).json({
         //     err: new Error('Invalid request!')
         // })
         req.currentUser = null
         next()
     }
-    
+
+    // TESTING CODE
     // try {
-    //     // console.log(`req: ${JSON.stringify(req)}`)
-    //     // console.log(`req.body: ${JSON.stringify(req.body)}`)
-    //     // console.log(`req.headers: ${JSON.stringify(req.headers)}`)
-    //     // res.send(req)
     //     console.log(`Auth: req: ${req.json()}`)
 
     //     console.log(`Auth: defining user headers auth: ${req.headers.authorization}`) // undefined

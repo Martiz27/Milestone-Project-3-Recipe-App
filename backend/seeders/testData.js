@@ -1,3 +1,5 @@
+// Seeder Data for Recipe Collection
+
 const db = require('../models')
 const { Recipe } = db
 Recipe.create([
@@ -43,11 +45,13 @@ Recipe.create([
     }
 ])
     .then(() => {
-        console.log('success!')
+        // Console log success message and exit script
+        console.log('Successfully seeded recipe data')
         process.exit()
     })
     .catch(err => {
-        console.log('Failure', err)
+        // Console log error message and exit script
+        console.log('Failure to seed recipe data...', err)
         process.exit()
     })
 
