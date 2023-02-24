@@ -44,18 +44,18 @@ Our inspiration for the app comes from our love of food and cooking.
 ## Other Information
 ### Routes
 
-| Method | Path                      | Purpose                   | Redirect Path*                    |
-| ------ | ------------------------- | ------------------------- | --------------------------------- |
-| GET    | `/`                       | Welcome Page              | `/users/signup` or `/users/login` |
-| POST   | `/users/signup`           | User Signup Page          | `/recipes`                        |
-| POST   | `/users/login`            | User Login Page           | `/recipes`                        |
-| GET    | `/recipes/`               | Recipes Index Page        |                                   |
-| POST   | `/recipes/new`            | New Recipe Form           | `/recipes/:recipeId`              |
-| GET    | `/recipes/:recipeId`      | View Recipe               |                                   |
-| PUT    | `/recipes/:recipeId/edit` | Edit Recipe Form          | `/recipes/:recipeId`              |
-| DELETE | `/recipes/:recipeId`      | Delete Recipe             | `/recipes`                        |
-| GET    | `/recipes/?categoryId`    | Filter by Recipe Category |                                   |
-| GET    | `*`                       | 404 Page                  |                                   |
+| Method | Path                      | Purpose                   | Redirect Path*                  |
+| ------ | ------------------------- | ------------------------- | ------------------------------- |
+| GET    | `/`                       | Welcome Page              | `/user/signup` or `/auth/login` |
+| POST   | `/user/signup`            | User Signup Page          | `/recipes`                      |
+| POST   | `/auth/login`             | User Login Page           | `/recipes`                      |
+| GET    | `/recipes/`               | Recipes Index Page        |                                 |
+| POST   | `/recipes/new`            | New Recipe Form           | `/recipes/:recipeId`            |
+| GET    | `/recipes/:recipeId`      | View Recipe               |                                 |
+| PUT    | `/recipes/:recipeId/edit` | Edit Recipe Form          | `/recipes/:recipeId`            |
+| DELETE | `/recipes/:recipeId`      | Delete Recipe             | `/recipes`                      |
+| GET    | `/recipes/?categoryId`    | Filter by Recipe Category |                                 |
+| GET    | `*`                       | 404 Page                  |                                 |
 
 ### Recipes
 
